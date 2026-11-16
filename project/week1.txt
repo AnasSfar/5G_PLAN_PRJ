@@ -1,0 +1,115 @@
+WEEK 1 - SCENARIO DEFINITION
+============================
+Goal (from the work instructions): choose a ~30 x 30 km region, collect the real base stations
+from Infoantenas, and turn them into a clean dataset (JSON/CSV/map) usable by the C-RAN simulator.
+
+
+1. FOLDER LAYOUT
+----------------
+project/
+  week1.txt, week2.txt, ...   one explanation file per week (what was done and WHY)
+  report.txt                  running draft of the final report, one section added each week
+  python/                     all code (config.py + numbered steps 01..05)
+  data/raw/tiles/             raw GeoJSON answers, one file per tile (never edited)
+  data/raw/details/           raw detail pages, one file per site (never edited)
+  data/rrh_master.csv         master dataset as CSV
+  json/rrh_master.json        master dataset (source of truth for the simulator)
+  maps/                       Folium map (rrh_map.html) and density figure (density.png)
+  archive/                    earlier scenario (Barcelona), kept for reference, not used
+
+Why: keeping the raw answers untouched means we scrape ONCE; every later change (new merge
+radius, new band rules) is just a re-run of step 3 on the files already on disk.
+
+
+2. DECISIONS AND REASONS
+------------------------
+- Area: Madrid around the Santiago Bernabeu stadium, centre 40.4531 N, 3.6883 W, 30 x 30 km box
+  (west -3.866, south 40.318, east -3.511, north 40.588). One box holds a very dense core with big
+  buildings, large parks (Retiro, Casa de Campo, Monte de El Pardo), the airport, suburban towns
+  around the M-40 and sparse outskirts, which stresses BBU-pool placement.
+  HISTORY: the pipeline was first built on Barcelona (centre 41.38 / 2.10, 1,437 RRHs). A first
+  Barcelona box at 41.40 / 2.00 had cut the city in half, which taught us to check the box on a map.
+  We then chose Madrid. The Barcelona data and texts are in archive/barcelona_41.38_2.10/.
+- Operators: all of them. Towers closer than 50 m are merged into ONE RRH and the operator list
+  is kept as an attribute, so one physical site is not counted several times.
+- Technologies: label sites 4G / 5G / 4G+5G from band evidence; sites whose bands are ambiguous are
+  kept but flagged (see section 3).
+- Source of truth: Infoantenas only. OpenCelliD is for a few spot checks. If they disagree,
+  Infoantenas wins because it is the official source.
+- Tiles: 2 km x 2 km, 15 x 15 = 225 requests, 0.5 s between requests, raw answers saved to disk.
+- Language: Python (requests, pandas, numpy, folium, matplotlib).
+- Synthetic RRHs: NOT in week 1. The real run uses 0 synthetic RRHs; the injection (10 %, 25 %,
+  50 % of the real count, minimum RRH-RRH distance 200 m, seed 42, is_synthetic = true) is built
+  with the simulator in a later week. The master JSON already carries is_synthetic = false.
+
+
+3. HOW THE DATA IS OBTAINED (what we found out)
+-----------------------------------------------
+The portal https://geoportal.minetur.gob.es/VCTEL/vcne.do is a web map that loads its points from
+   /VCTEL/infoantenasGeoJSON.do?idCapa=null&bbox=west,south,east,north&zoom=3
+(found by reading the portal's own JavaScript; bbox is in EPSG:4258, i.e. degrees lon/lat; the
+literal text "null" for idCapa is what the portal itself sends; zoom 1-6 return every site,
+zoom >= 8 returns an empty "{}").
+
+Each GeoJSON feature gives ONLY: site id, operator + code, address, latitude, longitude.
+It does NOT give the technology or the frequency. That contradicts the assumption in the
+instructions, so a second step is needed:
+   /VCTEL/detalleEstacion.do?emplazamiento=<id>&codEmplazamiento=<operator - id>
+This page lists the assigned frequency bands (MHz) of the site and the measured field levels.
+
+Technology is therefore INFERRED from the bands (rules in python/config.py). A frequency does
+NOT identify the radio technology (700 MHz is used by 4G and 5G, 900/2100 MHz by several
+generations), so the bands are only evidence:
+   4G evidence:  800, 1800, 2600 MHz
+   5G evidence:  3.5 GHz (3300-3800 MHz), 26 GHz (24.25-27.5 GHz)
+   ambiguous:    700, 900, 2100 MHz  -> label "ambiguous": kept in the master file, not counted
+                 as 4G or 5G.
+An RRH combines the labels of its stations; "core" RRHs = those with 4G or 5G evidence (flag
+in_core). The simulations use the core RRHs; the ambiguous ones are for sensitivity tests.
+Limits (for the final report): bands are assigned to the site, which does not prove a carrier is
+on air; 1800 MHz counts as 4G evidence but can also be shared with other technologies.
+Also: the source text has lost its accents (Espa?a); we do not need addresses, so we ignore it.
+
+
+4. PIPELINE (python/)
+---------------------
+  01_scrape_tiles.py    225 requests -> data/raw/tiles/tile_RR_CC.json (resumable)
+  02_scrape_details.py  one request per distinct site -> data/raw/details/*.html (resumable)
+  03_process.py         remove duplicates -> read bands -> label 4G/5G/ambiguous
+                        -> merge ALL stations within 50 m (single-linkage, grid hashing)
+                        -> json/rrh_master.json + data/rrh_master.csv
+  04_map.py             maps/rrh_map.html (Folium, coloured by label) + maps/density.png
+  05_spotcheck.py       3 small areas vs OpenCelliD -> data/spotcheck_opencellid.csv
+                        (key read from the OPENCELLID_KEY environment variable, never stored in a file)
+  06_checks.py          cap test (busiest tile as 4 and 16 sub-tiles), sensitivity of the technology
+                        rule, and data/raw/manifest.json (dates, counts, parameters)
+Run in this order from the python/ folder:  python 01_scrape_tiles.py  (etc.)
+
+
+5. RESULTS
+----------
+Step 1: 225 tiles, 0 failures, 4,789 distinct sites; 50 tiles empty; the busiest tile has 211
+sites. Cap test (06_checks.py): the same tile queried as 4 and as 16 sub-tiles returns the same
+211 stations, so the service does not truncate its answers.
+Step 2: 4,789 detail pages downloaded, 0 failures.
+Step 3: 4,146 stations have 4G or 5G evidence, 643 have only ambiguous bands (700/900/2100 MHz).
+Merging all stations within 50 m gives 2,304 RRHs: 2,085 core (1,124 "4G+5G", 951 "4G", 10 "5G")
+and 219 ambiguous. Core RRHs with 4G: 2,075; with 5G: 1,134. Operators in core RRHs: Movistar
+1,432, Orange 1,067, Vodafone 1,012, DS Mobile Networks 241, MasMovil/Yoigo 24; 1,109 core RRHs
+have several operators; every DS Mobile Networks RRH is shared with another operator. Largest RRH
+merges 8 stations. Note: earlier versions dropped ambiguous stations BEFORE merging (2,093 RRHs);
+merging everything first and labelling afterwards is more consistent (a tower exists whatever
+runs on it) and gives 2,085 core RRHs.
+Step 4: maps/rrh_map.html (grey = ambiguous) and maps/density.png (core RRHs only).
+Step 5: for each core RRH inside 3 areas of ~1 km2, an OpenCelliD LTE/NR cell within 500 m
+(Salamanca 28 RRHs, Alcobendas 11, Monte de El Pardo 1). See data/spotcheck_opencellid.csv. The
+test is small, lenient and one-directional (it cannot show missing sites); OpenCelliD lists more
+positions because it lists cells with estimated positions. Infoantenas stays the reference.
+Step 6: manifest of the raw data in data/raw/manifest.json.
+
+
+6. OPEN POINTS FOR NEXT WEEK
+----------------------------
+- Eyeball a few Madrid sites on the Infoantenas portal against the dataset.
+- Week 2 candidates: synthetic RRH injection, candidate BBU-pool set, farthest-first k-center,
+  distance matrix RRH-pool (delay), and the Excel link budget for the 5G deployment (not started).

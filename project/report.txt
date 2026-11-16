@@ -1,0 +1,126 @@
+C-RAN PROJECT - WEEK 1 REPORT: SCENARIO DEFINITION
+==================================================
+Plain-text copy of the Claude Doc "C-RAN Project - Week 1 Report: Scenario Definition"
+(same content, kept in sync with it). Later weeks add sections here for the final report.
+Figures: maps/rrh_map.html (interactive map), maps/density.png.
+
+
+1. INTRODUCTION
+---------------
+In a Cloud Radio Access Network (C-RAN) the baseband processing of many sites is concentrated in
+shared baseband unit (BBU) pools, and each site keeps only a remote radio head (RRH) linked to its
+pool by a fronthaul. The aim of the project is to choose the number and the location of the BBU
+pools and to assign every RRH to a pool, respecting the maximum delay and balancing the load [3].
+The result depends on the scenario, that is, on the position and the density of the RRHs. In this
+first stage we define the scenario: we build a dataset of real RRHs for an area of 30 x 30 km from
+public data [1] and check it against OpenCelliD [2].
+
+
+2. SCENARIO
+-----------
+The scenario is centred on the Santiago Bernabeu stadium in Madrid (40.4531 N, 3.6883 W) and covers
+30 x 30 km, from 40.318 N to 40.588 N and from 3.866 W to 3.511 W. We chose it because the real
+deployment is well documented and because one box contains very different densities: a dense urban
+core, large parks with few sites (Casa de Campo, Monte de El Pardo), the airport, the towns along
+the M-40 ring road and a sparse periphery. This makes the placement of the BBU pools non-trivial.
+
+
+3. DATA ACQUISITION
+-------------------
+The data comes from Infoantenas [1], the official register of mobile base stations. Its web viewer
+requests the stations of the visible map window from a GeoJSON service, which we queried directly
+with a bounding box. Each station is returned with its code, operator, address and coordinates, but
+without technology or frequency. We divided the scenario into 15 x 15 tiles of 2 x 2 km and sent one
+request per tile, 0.5 s apart. The 225 requests returned 4,789 distinct stations (50 tiles are empty,
+the busiest has 211 stations). To check that the service does not truncate its answers, we queried
+the busiest tile again as 4 and as 16 sub-tiles and obtained the same 211 stations. We stored every
+answer unmodified.
+
+The frequency bands of a station are listed on its detail page, so we downloaded the 4,789 detail
+pages. A frequency does not identify the radio technology: 700 MHz is used by 4G and by 5G, and 900
+and 2100 MHz can carry several generations. We therefore use the bands only as evidence (Table 1).
+Stations whose only bands are 700, 900 or 2100 MHz are labelled ambiguous: they are kept in the
+dataset, but they are not counted as 4G or 5G.
+
+Table 1. Frequency bands used as evidence of the technology of a station.
+  4G evidence   800, 1800 and 2600 MHz
+  5G evidence   3.5 GHz and 26 GHz
+  Ambiguous     700, 900 and 2100 MHz
+
+
+4. DATA PROCESSING
+------------------
+The raw files are never modified. We remove duplicate stations (same operator and code) and label
+each station 4G, 5G, 4G+5G or ambiguous according to Table 1. Several operators often share one
+tower, so we then merge all stations closer than 50 m, whatever their operator and label, into a
+single RRH located at their mean position. The distance is computed in a local plane,
+x = (lon - lon0) k_lon and y = (lat - lat0) k_lat, with k_lat = 111.19 km/deg and
+k_lon = k_lat cos(lat0) = 84.6 km/deg. The label of an RRH combines the labels of its stations, and
+an RRH whose stations are all ambiguous is itself ambiguous. We call core the RRHs with 4G or 5G
+evidence. Each RRH keeps its operators, bands and label, a flag in_core, and a field is_synthetic
+(false for real sites) that will mark the synthetic RRHs added later. The dataset is stored as JSON
+and CSV, and the processing is implemented in Python.
+
+
+5. RESULTS
+----------
+The 4,789 stations merge into 2,304 RRHs (Table 2). 2,085 of them are core RRHs: 1,124 with 4G and
+5G, 951 with 4G only and 10 with 5G only. The other 219 RRHs (about 10 %) are ambiguous. The
+simulations will use the core RRHs, and the ambiguous ones are kept for sensitivity tests. In total
+2,075 core RRHs provide 4G and 1,134 provide 5G. By operator, Movistar is present in 1,432 core
+RRHs, Orange in 1,067, Vodafone in 1,012, DS Mobile Networks in 241 and MasMovil/Yoigo in 24; the
+total is larger than 2,085 because 1,109 RRHs are shared by two or more operators, which confirms
+that the merging step is needed. The largest RRH merges 8 stations.
+
+Table 2. Number of elements after each processing step.
+  Distinct stations                         4,789
+  Stations with 4G or 5G evidence           4,146
+  Stations with ambiguous bands only          643
+  RRHs after merging (50 m)                 2,304
+  core RRHs (4G or 5G evidence)             2,085
+    of which 4G + 5G                        1,124
+    of which 4G only                          951
+    of which 5G only                           10
+  ambiguous RRHs                              219
+
+Figures 1 and 2 show the RRHs and the density of the core RRHs. The density is highest in the
+centre of Madrid and decreases towards the periphery, with a ring of intermediate density along the
+M-30 and M-40 roads, and the large parks appear as empty areas. The scenario therefore combines
+dense and sparse zones, as intended.
+
+Figure 1. The 2,304 RRHs in the 30 x 30 km scenario (purple: 4G+5G, blue: 4G, orange: 5G, grey:
+ambiguous). Map data: OpenStreetMap contributors.   [maps/rrh_map.html]
+Figure 2. Density of the 2,085 core RRHs per hexagonal cell.   [maps/density.png]
+
+
+6. VALIDATION
+-------------
+In three areas of about 1 km2 with different density (Salamanca, Alcobendas and Monte de El Pardo)
+we checked whether OpenCelliD has an LTE or NR cell within 500 m of each RRH. All 40 RRHs have a
+match (28 of 28, 11 of 11 and 1 of 1), so none appears to be invented or misplaced. The test is
+limited: the areas are small, the tolerance is easily met where OpenCelliD has many cells, and it
+cannot show missing stations. OpenCelliD lists more positions than we have RRHs (110 against 28 in
+Salamanca), but it contains radio cells with estimated positions, so one site often appears several
+times. We therefore keep Infoantenas as the reference.
+
+
+7. LIMITATIONS AND NEXT STEPS
+-----------------------------
+The technology is inferred from the assigned bands, which does not prove that a carrier is on air,
+and some bands can be shared between technologies: our evidence for 4G rests on 800, 1800 and 2600
+MHz, and 1800 MHz in particular may also carry 5G. The 219 ambiguous RRHs show how much the
+technology rule matters for the size of the dataset. The coordinates are those of the register and
+were not verified in the field.
+
+The dataset gives us a realistic scenario of 2,085 core RRHs with a wide range of densities. Next we
+will inject synthetic RRHs for robustness tests, select the BBU pools with a farthest-first
+k-center heuristic, evaluate the delay and the load balancing, and prepare the 5G link budget.
+
+
+REFERENCES
+----------
+[1] Ministerio para la Transformacion Digital y de la Funcion Publica, "Infoantenas - Niveles de
+    exposicion", https://geoportal.minetur.gob.es/VCTEL/vcne.do.
+[2] OpenCelliD, open database of cell towers and geolocation, https://opencellid.org.
+[3] Master thesis on Cloud-RAN planning (T. M., 2016), reference document of the project, and
+    project instructions, MASTEAM Wireless and Radio Communication, EETAC-UPC, 2026.

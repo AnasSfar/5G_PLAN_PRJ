@@ -1,0 +1,4 @@
+area,opencellid_lte_nr_positions,infoantenas_rrh,rrh_with_opencellid_cell_within_500m,match_rate
+dense: Salamanca,110,28,28,1.0
+medium: Alcobendas,37,11,11,1.0
+sparse: Monte de El Pardo,8,1,1,1.0

@@ -1,0 +1,103 @@
+WEEK 1 - SCENARIO DEFINITION
+============================
+Goal (from the work instructions): choose a ~30 x 30 km region, collect the real base stations
+from Infoantenas, and turn them into a clean dataset (JSON/CSV/map) usable by the C-RAN simulator.
+
+
+1. FOLDER LAYOUT
+----------------
+project/
+  week1.txt, week2.txt, ...   one explanation file per week (what was done and WHY)
+  report.txt                  running draft of the final report, one section added each week
+  python/                     all code (config.py + numbered steps 01..04)
+  data/raw/tiles/             raw GeoJSON answers, one file per tile (never edited)
+  data/raw/details/           raw detail pages, one file per site (never edited)
+  data/rrh_master.csv         master dataset as CSV
+  json/rrh_master.json        master dataset (source of truth for the simulator)
+  maps/                       Folium map (rrh_map.html) and density figure (density.png)
+
+Why: keeping the raw answers untouched means we scrape ONCE; every later change (new merge
+radius, new band rules) is just a re-run of step 3 on the files already on disk.
+
+
+2. DECISIONS AND REASONS
+------------------------
+- Area: Barcelona metropolitan area, centre 41.38 N, 2.10 E, 30 x 30 km box
+  (west 1.920, south 41.245, east 2.280, north 41.515). It holds the whole dense city, Badalona,
+  Sant Cugat, the Llobregat delta and the hills, which stresses BBU-pool placement.
+  CHANGE MADE: the first choice, centre 41.40 / 2.00, was too far west. A map check showed it cut
+  Barcelona in half (219 of 1,196 RRHs were crammed against the east edge). We moved the centre
+  and re-scraped; the first tiles are archived in data/raw/tiles_v1_centre_41.40_2.00/.
+  About a quarter of the new box is sea, which is unavoidable on a coastal site.
+- Operators: all of them. Towers closer than 50 m are merged into ONE RRH and the operator list
+  is kept as an attribute, so one physical site is not counted several times.
+- Technologies: keep sites with 4G, 5G or both and label them (4G / 5G / 4G+5G).
+- Source of truth: Infoantenas only. OpenCelliD is for a few spot checks (needs a free API key,
+  so it is postponed). If they disagree, Infoantenas wins because it is the official source.
+- Tiles: 2 km x 2 km, 15 x 15 = 225 requests, 0.5 s between requests, raw answers saved to disk.
+- Language: Python (requests, pandas, numpy, folium, matplotlib).
+- Synthetic RRHs: NOT in week 1. The real run uses 0 synthetic RRHs; the injection (10 %, 25 %,
+  50 % of the real count, minimum RRH-RRH distance 200 m, seed 42, is_synthetic = true) is built
+  with the simulator in a later week. The master JSON already carries the field is_synthetic = false.
+
+
+3. HOW THE DATA IS OBTAINED (what we found out)
+-----------------------------------------------
+The portal https://geoportal.minetur.gob.es/VCTEL/vcne.do is a web map that loads its points from
+   /VCTEL/infoantenasGeoJSON.do?idCapa=null&bbox=west,south,east,north&zoom=3
+(found by reading the portal's own JavaScript; bbox is in EPSG:4258, i.e. degrees lon/lat; the
+literal text "null" for idCapa is what the portal itself sends; zoom 1-6 return every site,
+zoom >= 8 returns an empty "{}").
+
+Each GeoJSON feature gives ONLY: site id, operator + code, address, latitude, longitude.
+It does NOT give the technology or the frequency. That contradicts the assumption in the
+instructions, so a second step is needed:
+   /VCTEL/detalleEstacion.do?emplazamiento=<id>&codEmplazamiento=<operator - id>
+This page lists the assigned frequency bands (MHz) of the site and the measured field levels.
+
+Technology is therefore INFERRED from the bands (rules in python/config.py):
+   4G evidence: 703-788 MHz (700), 791-862 MHz (800), 1710-1880 MHz (1800), 2500-2690 MHz (2600)
+   5G evidence: 3300-3800 MHz (3.5 GHz, n78), 24.25-27.5 GHz (26 GHz)
+   not used:    900 MHz and 2100 MHz, because they are shared with 2G/3G.
+DECISION (after review): 700 MHz can carry 4G or 5G, so it counts only as 4G evidence. A site is
+labelled 5G only with a 3.5 GHz or 26 GHz band (strict rule). Before this decision 700 MHz also
+counted as 5G, which gave 939 "4G+5G" RRHs; the strict rule gives 756.
+Limits of this rule (to mention in the final report):
+   - bands are assigned to the site, which does not prove that a given carrier is switched on;
+   - a site with only 900/2100 MHz (2G/3G) is dropped, as the instructions ask.
+Also: the source text has lost its accents (Espa?a, Cervell?); we do not need addresses, so we ignore it.
+
+
+4. PIPELINE (python/)
+---------------------
+  01_scrape_tiles.py    225 requests -> data/raw/tiles/tile_RR_CC.json (resumable)
+  02_scrape_details.py  one request per distinct site -> data/raw/details/*.html (resumable)
+  03_process.py         remove duplicates (same site seen in two tiles) -> read bands ->
+                        label 4G/5G -> drop sites without 4G/5G -> merge within 50 m
+                        (single-linkage, grid hashing) -> json/rrh_master.json + data/rrh_master.csv
+  04_map.py             maps/rrh_map.html (Folium, coloured by label) + maps/density.png
+  05_spotcheck.py       compares 3 small areas with OpenCelliD -> data/spotcheck_opencellid.csv
+Run in this order from the python/ folder:  python 01_scrape_tiles.py  (etc.)
+
+
+5. RESULTS
+----------
+Step 1 (done): 225 tiles downloaded, 0 failures. 3,254 features = 3,253 distinct sites (one site
+seen in two tiles was merged by its code).
+Step 2: 3,253 detail pages (the 2,729 of the first box were reused, 720 new ones fetched).
+Step 3: 2,779 sites have a 4G or 5G band, 474 were dropped (2G/3G only). After merging towers
+within 50 m: 1,437 RRHs = 756 "4G+5G", 680 "4G", 1 "5G" (757 RRHs carry 5G, all through a
+3.5/26 GHz band). Operators: Movistar 904, Vodafone 722, Orange 717, DS Mobile Networks 71;
+70 of those 71 are merged with another operator on the same tower, so DS adds almost no sites.
+Step 4: maps/rrh_map.html and maps/density.png written.
+Step 5 (python/05_spotcheck.py, OpenCelliD key in the OPENCELLID_KEY variable): for each of our
+RRHs inside 3 areas of ~1 km2 we look for an OpenCelliD LTE/NR cell within 500 m. Result: 26/26
+(Eixample), 3/3 (Castelldefels), 3/3 (Collserola). So no checked site looks invented, but the test is
+small, lenient and one-directional (it cannot show missing sites). OpenCelliD lists more positions
+(127 vs 26 in Eixample) because it lists cells with estimated positions. Infoantenas stays the reference.
+
+
+6. OPEN POINTS FOR NEXT WEEK
+----------------------------
+- Week 2 candidates: synthetic RRH injection, candidate BBU-pool set, farthest-first k-center,
+  distance matrix RRH-pool (delay), and the Excel link budget for the 5G deployment.

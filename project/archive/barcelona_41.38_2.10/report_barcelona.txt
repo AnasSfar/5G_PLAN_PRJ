@@ -1,0 +1,44 @@
+C-RAN DESIGN: BBU-POOL AND RRH PLACEMENT - REPORT (DRAFT, GROWS EVERY WEEK)
+==========================================================================
+Final report = the weekly sections below + last simulations, analysis and conclusions.
+
+
+1. SCENARIO AND DATA (week 1)
+-----------------------------
+1.1 Study area
+    Barcelona metropolitan area, centre 41.38 N / 2.10 E, box of 30 x 30 km
+    (1.920-2.280 E, 41.245-41.515 N). It contains the whole dense city, Badalona, Sant Cugat and
+    the Llobregat delta, and also sparse zones (hills, sea), so RRH density varies a lot.
+    A first box centred at 2.00 E was discarded after a map check showed it cut the city in half.
+
+1.2 Data source
+    Infoantenas (Ministerio para la Transformacion Digital), official register of mobile base
+    stations in Spain. Its map loads a GeoJSON service per bounding box; the area was split into
+    15 x 15 tiles of 2 x 2 km (225 requests, 0.5 s apart) and every raw answer was stored.
+    The GeoJSON contains site code, operator, address and coordinates, but not the technology.
+    The technology was inferred from the frequency bands listed on each site's detail page
+    (4G: 700/800/1800/2600 MHz; 5G: 3.5 GHz and 26 GHz only; 900 and 2100 MHz ignored because
+    they are shared with 2G/3G; 700 MHz can carry 4G or 5G so it counts as 4G only).
+
+1.3 Processing
+    Remove duplicates -> read bands -> label 4G / 5G / 4G+5G -> drop sites without 4G/5G ->
+    merge towers closer than 50 m (all operators) into one RRH keeping the operator list ->
+    master JSON and CSV -> Folium map.
+
+1.4 Results
+    Raw: 3,254 features in 225 tiles = 3,253 distinct sites.
+    3,253 distinct sites -> 2,779 with a 4G or 5G band (474 dropped: only 2G/3G bands) ->
+    1,437 RRHs after merging towers within 50 m (at most 6 towers in one RRH).
+    Labels: 756 RRHs 4G+5G, 680 RRHs 4G only, 1 RRH 5G only (757 RRHs carry 5G, always via a
+    3.5/26 GHz band). Operators present (RRHs): Movistar 904, Vodafone 722, Orange 717, DS Mobile
+    Networks 71 (70 of them merged with another operator on the same tower).
+    Spot-check with OpenCelliD (3 areas of ~1 km2, data/spotcheck_opencellid.csv): every RRH of ours
+    has an OpenCelliD LTE/NR cell within 500 m (26/26, 3/3, 3/3). Supporting evidence only: small
+    sample, lenient tolerance, and it cannot show missing sites. Infoantenas remains the reference.
+
+1.5 Limitations
+    - Technology is inferred from bands, not declared by the source.
+    - 5G needs a 3.5/26 GHz band (strict rule); a band assigned is not a carrier on air.
+    - Cross-check with OpenCelliD is small (3 areas).
+
+[Figures: maps/rrh_map.html (interactive), maps/density.png]

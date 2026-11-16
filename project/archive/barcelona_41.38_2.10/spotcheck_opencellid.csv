@@ -1,0 +1,4 @@
+area,opencellid_lte_nr_positions,infoantenas_rrh,rrh_with_opencellid_cell_within_500m,match_rate
+dense: Eixample,127,26,26,1.0
+medium: Castelldefels,46,3,3,1.0
+sparse: Collserola,10,3,3,1.0
