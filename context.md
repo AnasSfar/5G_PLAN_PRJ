@@ -58,7 +58,7 @@ Extra deliverable: a **5G link budget in Excel**.
 
 Full reasoning and limits: `week1.txt`.
 
-## Phase 2: load balancing (professor's review, not started)
+## Phase 2: load balancing (professor's review, done in week 2: see `week2.txt`)
 
 Use the BBU pools to spread the RRHs evenly so the network is more resilient to faults.
 - **Virtualised scenario:** the load is counted in Mbps or GOPS, which gives the number of processing cards per pool.
@@ -80,31 +80,38 @@ Use the BBU pools to spread the RRHs evenly so the network is more resilient to 
 **Outputs to simulate and plot**
 
 Before balancing (pools assigned by delay only):
-- [ ] Load per pool at 8:00, 15:00 and 21:00: three figures, x = pool id, y = total load (Mbps or GOPS).
-- [ ] At least at peak hour: 3 bars per pool for all residential, all office and the real mix.
-- [ ] Overall network load over 24 h (like fig. 4.21 of the thesis).
+- [x] Load per pool at 8:00, 15:00 and 21:00: three figures, x = pool id, y = total load (Mbps or GOPS).
+- [x] At least at peak hour: 3 bars per pool for all residential, all office and the real mix.
+- [x] Overall network load over 24 h (like fig. 4.21 of the thesis).
 
 After balancing:
-- [ ] Number of RRHs per pool for algorithm A (traffic) and algorithm B (number of RRHs), to compare with delay only.
-- [ ] Figure or table of how many RRHs change pool depending on the hour. Re-wiring is not physically possible, so the peak-hour assignment is the one adopted.
-- [ ] Balancing results when all RRHs are residential vs all office.
-- [ ] Number of RRHs per distance band (0–1 km, 1–2 km, …) for the three cases: delay only, traffic balancing, RRH-count balancing (like fig. 4.3 of the thesis).
-- [ ] Average capacity per pool for the same three cases (like fig. 4.4 of the thesis).
-- [ ] Repeat the whole comparison for three values of K: normal, too few pools, too many pools.
+- [x] Number of RRHs per pool for algorithm A (traffic) and algorithm B (number of RRHs), to compare with delay only.
+- [x] Figure or table of how many RRHs change pool depending on the hour. Re-wiring is not physically possible, so the peak-hour assignment is the one adopted.
+- [x] Balancing results when all RRHs are residential vs all office.
+- [x] Number of RRHs per distance band (0–1 km, 1–2 km, …) for the three cases: delay only, traffic balancing, RRH-count balancing (like fig. 4.3 of the thesis).
+- [x] Average capacity per pool for the same three cases (like fig. 4.4 of the thesis).
+- [x] Repeat the whole comparison for three values of K: normal, too few pools, too many pools.
+
+## Week 2 decisions (done)
+
+- Fronthaul budget 100 us round trip -> d_max = 10 km (thesis: 150 us / 15 km). Pools by farthest-first; K cases few 8 / normal 12 / many 25.
+- Profiles = thesis Fig. E.1; RRH profile from land use (office hubs 1.5 km, mixed = inside the M-30 + airport): 1,204 residential / 420 office / 461 mixed.
+- Peak per station 45 Mbps (4G) + 150 Mbps (5G); balancing hour 16:00 (maximum of the sum of the three profiles).
+- Scripts `python/08_traffic.py`, `09_balancing.py`, `10_report.py`; figures in `img/week2/`, results in `json/week2/`, report in `reports/week2_report.pdf`.
 
 ## Next steps
 
 Phase 1, still open:
 - [ ] Check a few Madrid sites by eye on the Infoantenas portal against the dataset.
 - [ ] Synthetic RRH injection (variable count, labelled).
-- [ ] RRH-to-candidate distance matrix and conversion to fronthaul delay.
-- [ ] Farthest-first k-center for several K, then RRH-to-pool assignment by delay (this is the baseline for phase 2).
+- [x] RRH-to-candidate distance matrix and conversion to fronthaul delay.
+- [x] Farthest-first k-center for several K, then RRH-to-pool assignment by delay (this is the baseline for phase 2).
 - [ ] 5G link budget in Excel.
 
 Phase 2:
-- [ ] Define the 24 h traffic profiles (residential, office, mixed), the conversion to Mbps or GOPS, and how each RRH gets its profile.
-- [ ] Build the list of possible pools for each RRH (within the delay limit).
-- [ ] Implement algorithms A and B, then produce the figures listed above.
+- [x] Define the 24 h traffic profiles (residential, office, mixed), the conversion to Mbps or GOPS, and how each RRH gets its profile.
+- [x] Build the list of possible pools for each RRH (within the delay limit).
+- [x] Implement algorithms A and B, then produce the figures listed above.
 
 Every week:
 - [ ] Weekly report, and `report.txt` updated.

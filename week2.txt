@@ -1,0 +1,88 @@
+WEEK 2 - BBU POOLS, TRAFFIC PROFILES AND LOAD BALANCING
+=======================================================
+Goal (project review, phase 2: docs/Project review_phase2_RRH_balancing_and_load_balancing.pdf):
+place the BBU pools, assign the RRHs by delay only (reference), give each RRH a 24 h traffic
+profile, then balance the pools (algorithm A: traffic, algorithm B: number of RRHs) and produce
+every figure asked, for three numbers of pools.
+Report: reports/week2_report.docx / .pdf (built by python/10_report.py from the json results).
+
+
+1. NEW FILES
+------------
+  python/config.py        week-2 section at the end: delay budget, K cases, peak traffic, hubs, profiles
+  python/cran.py          shared helpers: load core RRHs, km plane, farthest-first, distance matrix, RTT
+  python/08_traffic.py    profile of every RRH + peak traffic -> json/week2/rrh_traffic.json,
+                          img/week2/profiles.png, classification.png, network_load_24h.png
+  python/09_balancing.py  pools, three assignments, all outputs -> json/week2/*.json, img/week2/*.png
+  python/10_report.py     builds reports/week2_report.docx and exports the PDF with Word
+  img/upc_logo.png        logo taken from the week-1 report header
+Run from python/:  python 08_traffic.py ; python 09_balancing.py ; python 10_report.py   (~15 s)
+Figures are written for each case: suffix _few, _normal, _many. 10_report.py needs python-docx
+(pip install python-docx); the PDF export needs Microsoft Word, otherwise only the .docx is written.
+
+
+2. DECISIONS AND REASONS
+------------------------
+- Delay limit: 100 us round trip, fibre 2e8 m/s -> d_max = 10 km (eq. 3.3 of the thesis).
+  The thesis uses 150 us / 15 km. Our box is only 30 km wide, so with 15 km nearly every RRH reaches
+  nearly every pool and the constraint means little; real fibre is also longer than the straight
+  line. Changeable in config (MAX_RTT_US).
+- Pools: farthest-first k-center, candidates = all 2,085 core RRHs, first pool = RRH nearest to the
+  centroid (deterministic, no seed needed). Pool ids = selection order (pool 1 = centre).
+  Known weakness: it puts most pools on the border (outliers) and one pool in the dense centre.
+  That is why the delay-only assignment is so unbalanced (pool 1 gets ~1000 RRHs).
+- K cases: K >= 10 is needed to serve every RRH with 10 km.
+    few    K = 8   (11 unserved, 1,177 RRHs with a single possible pool)
+    normal K = 12  (first K where almost every RRH has a choice: 46 single, 2.8 options on average)
+    many   K = 25  (7 options on average, some pools get 1 RRH with delay only)
+- Traffic profiles: the three normalised curves of thesis Fig. E.1, digitised by hand (config.PROFILES,
+  index h = hour ending at h:00). No real per-site traffic exists, so the profile comes from land use:
+    office      = within 1.5 km of 8 business districts (AZCA, Cuatro Torres, Distrito Telefonica,
+                  Campo de las Naciones, Mendez Alvaro, Julian Camarillo, Ciudad Universitaria,
+                  Alcobendas)
+    mixed       = dense centre inside the M-30 (3.5 km around 40.425 N, 3.700 W) or airport (2.5 km)
+    residential = everything else
+  Result 1,204 residential (58 %), 420 office (20 %), 461 mixed (22 %). A first try (1.2 km, small
+  centre) gave only 14 % office, too low for Madrid compared with 37 % in the thesis, so the radii
+  were widened.
+- Peak traffic per RRH = n_towers_merged x (45 Mbps if 4G + 150 Mbps if 5G).
+    4G: 3 sectors x 20 MHz x 1.5 b/s/Hz = 90 Mbps, 50 % busy-hour load -> 45 Mbps
+    5G n78: 3 x 100 MHz x 5 b/s/Hz = 1.5 Gbps, 10 % load (5G still lightly used) -> 150 Mbps
+  Load unit = Mbps (traffic per hour). GOPS not used: no capacity limit, so cards are proportional.
+- Balancing hour: 16:00 = hour where the sum of the three profiles is maximum (as suggested in the
+  review). The network peak is at 22:00 (residential cells dominate) but at 22:00 office cells carry
+  nothing, so balancing at 22:00 would only balance residential traffic.
+- Algorithm A order (second iteration): number of possible pools asc, then traffic at 16:00 desc,
+  then distance to the nearest possible pool asc. Pool choice: lowest load, ties -> closest pool.
+- Algorithm B order: number of possible pools asc, ties by distance to the nearest pool. Pool choice:
+  fewest RRHs, ties -> closest.
+- Unserved RRHs (only in the "few" case) are left out of every algorithm and reported.
+
+
+3. RESULTS (normal case K = 12, balancing hour 16:00)
+-----------------------------------------------------
+                       delay only     A (traffic)    B (RRH count)
+  pool load std        68.8 Gbps      17.6 Gbps      18.8 Gbps
+  pool load CV         200 %          51 %           55 %
+  max pool load        258.8 Gbps     49.0 Gbps      60.1 Gbps
+  RRHs per pool        14 - 1000      63 - 238       63 - 230
+  mean distance        3.58 km        6.80 km        6.71 km
+  RTT mean             35.8 us        68.0 us        67.1 us
+  24 h avg cap. std    37.9 Gbps      10.5 Gbps      10.2 Gbps
+- Balancing moves 1,439 (A) / 1,359 (B) RRHs away from their nearest pool; ~25 % of links end in 9-10 km.
+- Hour dependence: running A at another hour puts 452 (14:00) to 717 (01:00) RRHs in another pool.
+- All residential / all office: one profile only scales every RRH by the same factor, so both give the
+  same relative distribution (CV 157 % before, 41 % after A); the real mix is worse (200 % / 51 %).
+- Network load: max 476 Gbps at 22:00, min 77 Gbps at 07:00. Sum of RRH peaks 637 Gbps ->
+  multiplexing gain 1.34 (thesis 1.31).
+- K comparison: few -> A = B (CV 187 -> 122 %), most RRHs have one option; many -> best balance
+  (CV 37 %) but mean link 2.35 -> 7.55 km.
+
+
+4. LIMITS / OPEN POINTS
+-----------------------
+- Profiles from land use, not measured traffic; same peak per station everywhere.
+- Greedy assignment is very sensitive to small changes (hour dependence above).
+- Balanced assignment interleaves pool areas (bad for CoMP clustering); a distance penalty in the pool
+  choice could be tested.
+- Next: synthetic RRH injection, density-aware pool placement (vs farthest-first), Excel link budget.

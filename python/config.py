@@ -58,3 +58,62 @@ def tile_bbox(r: int, c: int):
     dlon = 2 * HALF_LON / N_TILES
     dlat = 2 * HALF_LAT / N_TILES
     return (w0 + c * dlon, s0 + r * dlat, w0 + (c + 1) * dlon, s0 + (r + 1) * dlat)
+
+
+# =====================================================================================
+# WEEK 2 - BBU pools, traffic profiles and load balancing (phase 2 of the assignment)
+# =====================================================================================
+FIGS = ROOT / "img" / "week2"            # every week-2 figure goes here
+RESULTS = ROOT / "json" / "week2"        # every week-2 numeric result goes here
+for d in (FIGS, RESULTS):
+    d.mkdir(parents=True, exist_ok=True)
+
+# ---------- fronthaul delay ----------
+FIBRE_SPEED_KM_PER_MS = 200.0            # 2e8 m/s in fibre (same value as the thesis)
+MAX_RTT_US = 100.0                       # round-trip fronthaul budget; thesis uses 150 us (15 km)
+D_MAX_KM = FIBRE_SPEED_KM_PER_MS * (MAX_RTT_US / 1000.0) / 2   # (3.3) of the thesis -> 10 km
+
+# ---------- number of pools (farthest-first k-center) ----------
+K_SWEEP = list(range(2, 41))             # K values tried for the coverage curve
+K_CASES = {"few": 8, "normal": 12, "many": 25}   # the three cases compared (see week2.txt)
+K_REFERENCE = "normal"
+
+# ---------- traffic ----------
+# Peak (busy-hour) downlink traffic of one operator station, in Mbps (average over the hour).
+# 4G: 3 sectors x 20 MHz x 1.5 bit/s/Hz = 90 Mbps capacity, 50 % busy-hour load -> 45 Mbps.
+# 5G n78: 3 sectors x 100 MHz x 5 bit/s/Hz = 1500 Mbps capacity, 10 % busy-hour load -> 150 Mbps.
+PEAK_4G_MBPS = 45.0
+PEAK_5G_MBPS = 150.0
+
+# Office hubs (lat, lon): business districts of the scenario. An RRH closer than OFFICE_RADIUS_KM to
+# one of them is an office cell. Mixed hubs (dense centre inside the M-30 with shops, offices and homes;
+# airport) -> mixed cell.
+# Every other RRH is residential. Rule chosen because we have no real per-site traffic (see week2.txt).
+OFFICE_HUBS = {
+    "AZCA / Nuevos Ministerios": (40.4497, -3.6925),
+    "Cuatro Torres / Plaza de Castilla": (40.4766, -3.6874),
+    "Distrito Telefonica (Las Tablas)": (40.5150, -3.6625),
+    "Campo de las Naciones / IFEMA": (40.4636, -3.6150),
+    "Mendez Alvaro": (40.3960, -3.6780),
+    "Julian Camarillo (San Blas)": (40.4380, -3.6250),
+    "Ciudad Universitaria": (40.4450, -3.7280),
+    "Alcobendas business park": (40.5300, -3.6400),
+}
+OFFICE_RADIUS_KM = 1.5
+MIXED_HUBS = {
+    "Central almond inside the M-30 (Sol)": ((40.4250, -3.7000), 3.5),
+    "Barajas airport": ((40.4915, -3.5932), 2.5),
+}
+
+# Normalised 24 h profiles digitised from Figure E.1 of the thesis. Index h = traffic of the hour
+# ending at h:00 (h = 1..24, 24 = midnight). 1.0 = peak hour of that profile.
+PROFILES = {
+    "residential": [0.90, 0.645, 0.59, 0.52, 0.32, 0.165, 0.145, 0.225, 0.175, 0.215, 0.26, 0.265,
+                    0.30, 0.34, 0.435, 0.42, 0.60, 0.795, 0.805, 0.465, 0.79, 1.00, 0.93, 0.86],
+    "office":      [0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.32, 0.19, 0.245, 0.53, 0.975,
+                    0.40, 0.945, 0.79, 1.00, 0.55, 0.12, 0.035, 0.075, 0.005, 0.005, 0.005, 0.005],
+    "mixed":       [0.36, 0.36, 0.275, 0.11, 0.065, 0.13, 0.165, 0.335, 0.49, 0.52, 0.59, 0.65,
+                    0.70, 0.72, 0.92, 0.94, 0.87, 1.00, 0.85, 0.78, 0.595, 0.76, 0.885, 0.76],
+}
+HOURS = list(range(1, 25))
+REPORT_HOURS = [8, 15, 21]               # the three hours asked for the "before" figures
