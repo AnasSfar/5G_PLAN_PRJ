@@ -1,0 +1,3348 @@
+{
+ "params": {
+  "n_real": 200,
+  "n_synthetic": 0,
+  "traffic_mode": "geo",
+  "traffic_shares": {
+   "mixed": 0.5,
+   "office": 0.3,
+   "residential": 0.2
+  },
+  "sample_seed": 42,
+  "synth_seed": 7,
+  "n_pool_candidates": 25,
+  "pool_min_dist_km": 2.0,
+  "bbox_wsen": [
+   -3.865586898667356,
+   40.31819578199478,
+   -3.5110131013326438,
+   40.58800421800522
+  ],
+  "centre": [
+   40.4531,
+   -3.6883
+  ]
+ },
+ "rrhs": [
+  {
+   "rrh_id": "RRH0015",
+   "lat": 40.325631,
+   "lon": -3.838653,
+   "x": -12.721159978276868,
+   "y": -14.173278109999758,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 1,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (1 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0051",
+   "lat": 40.328537,
+   "lon": -3.731303,
+   "x": -3.6384245245910747,
+   "y": -13.85015997000022,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 7,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (7 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0067",
+   "lat": 40.325235,
+   "lon": -3.714211,
+   "x": -2.192293976157011,
+   "y": -14.217309349999988,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0075",
+   "lat": 40.335548,
+   "lon": -3.688361,
+   "x": -0.005161125874947744,
+   "y": -13.070606879999591,
+   "label": "5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0079",
+   "lat": 40.319338,
+   "lon": -3.676247,
+   "x": 1.019787707715639,
+   "y": -14.872996779999696,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 0,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (0 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0092",
+   "lat": 40.349342,
+   "lon": -3.847922,
+   "x": -13.505397285405097,
+   "y": -11.536852019999904,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 3,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (3 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0127",
+   "lat": 40.343773,
+   "lon": -3.800358,
+   "x": -9.48107284088613,
+   "y": -12.156069130000043,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0131",
+   "lat": 40.348118,
+   "lon": -3.797758,
+   "x": -9.261090426544403,
+   "y": -11.672948579999964,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0141",
+   "lat": 40.340343,
+   "lon": -3.769083,
+   "x": -6.834938222218007,
+   "y": -12.537450830000221,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0160",
+   "lat": 40.347228,
+   "lon": -3.703847,
+   "x": -1.3154102291425716,
+   "y": -11.771907679999774,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0170",
+   "lat": 40.343401,
+   "lon": -3.693574,
+   "x": -0.44622586663007874,
+   "y": -12.1974318099999,
+   "label": "4G+5G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 19,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (19 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0173",
+   "lat": 40.35157,
+   "lon": -3.691314,
+   "x": -0.2550103833946129,
+   "y": -11.289120699999643,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 13,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (13 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0179",
+   "lat": 40.337337,
+   "lon": -3.689858,
+   "x": -0.13182023136324206,
+   "y": -12.87168797000013,
+   "label": "5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 13,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (13 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0187",
+   "lat": 40.336681,
+   "lon": -3.623566,
+   "x": 5.477054465383303,
+   "y": -12.944628610000054,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 0,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (0 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0189",
+   "lat": 40.338676,
+   "lon": -3.580172,
+   "x": 9.1485609607465,
+   "y": -12.72280455999996,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 0,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (0 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0193",
+   "lat": 40.349724,
+   "lon": -3.542692,
+   "x": 12.31969207210322,
+   "y": -11.494377439999694,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0196",
+   "lat": 40.342658,
+   "lon": -3.532559,
+   "x": 13.177031227689618,
+   "y": -12.280045979999892,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0202",
+   "lat": 40.33694,
+   "lon": -3.526176,
+   "x": 13.717088054898529,
+   "y": -12.915830400000079,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 3,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (3 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0231",
+   "lat": 40.367031,
+   "lon": -3.755725,
+   "x": -5.7047362642269785,
+   "y": -9.570012110000217,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 14,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (14 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0242",
+   "lat": 40.371751,
+   "lon": -3.716947,
+   "x": -2.423783162941184,
+   "y": -9.045195309999544,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0256",
+   "lat": 40.363247,
+   "lon": -3.695628,
+   "x": -0.6200119739600524,
+   "y": -9.990755069999773,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 15,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (15 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0258",
+   "lat": 40.359696,
+   "lon": -3.693669,
+   "x": -0.4542636856156377,
+   "y": -10.385590759999955,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 18,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (18 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0267",
+   "lat": 40.357918,
+   "lon": -3.666156,
+   "x": 1.873573301224201,
+   "y": -10.583286580000134,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0270",
+   "lat": 40.357796,
+   "lon": -3.659369,
+   "x": 2.447812011276986,
+   "y": -10.596851759999858,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0292",
+   "lat": 40.364075,
+   "lon": -3.596985,
+   "x": 7.726036217543714,
+   "y": -9.89868974999994,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0295",
+   "lat": 40.364658,
+   "lon": -3.576678,
+   "x": 9.444183482173434,
+   "y": -9.833865980000065,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 1,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (1 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0316",
+   "lat": 40.376842,
+   "lon": -3.781386,
+   "x": -7.875878085158798,
+   "y": -8.479127019999524,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 4,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (4 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0332",
+   "lat": 40.388,
+   "lon": -3.755764,
+   "x": -5.708036000442115,
+   "y": -7.238469000000116,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 16,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (16 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0334",
+   "lat": 40.378681,
+   "lon": -3.733582,
+   "x": -3.83124757162369,
+   "y": -8.274648609999877,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 14,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (14 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0336",
+   "lat": 40.379936,
+   "lon": -3.729919,
+   "x": -3.5213261932645765,
+   "y": -8.135105159999828,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 15,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (15 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0350",
+   "lat": 40.380999,
+   "lon": -3.728134,
+   "x": -3.3702998049568675,
+   "y": -8.016910189999601,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 15,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (15 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0362",
+   "lat": 40.388971,
+   "lon": -3.712676,
+   "x": -2.062419743074493,
+   "y": -7.130503510000135,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 32,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (32 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0364",
+   "lat": 40.387391,
+   "lon": -3.704382,
+   "x": -1.3606758413244016,
+   "y": -7.306183709999805,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 31,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (31 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0369",
+   "lat": 40.385693,
+   "lon": -3.707736,
+   "x": -1.6444531558252393,
+   "y": -7.4949843299995305,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 26,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (26 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0393",
+   "lat": 40.38997,
+   "lon": -3.692466,
+   "x": -0.3524795146721575,
+   "y": -7.019424700000113,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 30,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (30 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0400",
+   "lat": 40.386478,
+   "lon": -3.690286,
+   "x": -0.16803272110871362,
+   "y": -7.407700180000267,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 23,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (23 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0405",
+   "lat": 40.382179,
+   "lon": -3.697036,
+   "x": -0.7391409121881874,
+   "y": -7.8857059899998285,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 26,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (26 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0422",
+   "lat": 40.372295,
+   "lon": -3.675825,
+   "x": 1.0554925457357107,
+   "y": -8.984707949999779,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 7,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (7 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0465",
+   "lat": 40.395584,
+   "lon": -3.846047,
+   "x": -13.346756121216355,
+   "y": -6.395204039999964,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 7,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (7 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0466",
+   "lat": 40.392229,
+   "lon": -3.864974,
+   "x": -14.94814348900315,
+   "y": -6.768246489999865,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0477",
+   "lat": 40.39624,
+   "lon": -3.841869,
+   "x": -12.993261303093398,
+   "y": -6.32226340000004,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0506",
+   "lat": 40.406845,
+   "lon": -3.752492,
+   "x": -5.431196592855161,
+   "y": -5.143093450000239,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 10,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (10 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0507",
+   "lat": 40.400723,
+   "lon": -3.747413,
+   "x": -5.001469407300688,
+   "y": -5.823798629999988,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 13,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (13 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0524",
+   "lat": 40.394101,
+   "lon": -3.726914,
+   "x": -3.267077287458063,
+   "y": -6.560098810000002,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 28,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (28 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0528",
+   "lat": 40.391974,
+   "lon": -3.732505,
+   "x": -3.74012408691368,
+   "y": -6.796599940000174,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 25,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (25 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0569",
+   "lat": 40.398719,
+   "lon": -3.701003,
+   "x": -1.0747833113010898,
+   "y": -6.046623389999927,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 36,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (36 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0591",
+   "lat": 40.400215,
+   "lon": -3.699541,
+   "x": -0.9510855075443192,
+   "y": -5.880283149999588,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 33,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (33 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0598",
+   "lat": 40.397229,
+   "lon": -3.694044,
+   "x": -0.48599191845338624,
+   "y": -6.212296489999581,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 35,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (35 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0610",
+   "lat": 40.400326,
+   "lon": -3.688442,
+   "x": -0.012014424167919768,
+   "y": -5.867941059999937,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 36,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (36 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0612",
+   "lat": 40.403294,
+   "lon": -3.678378,
+   "x": 0.8394867365763433,
+   "y": -5.5379291399996315,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 31,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (31 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0640",
+   "lat": 40.399713,
+   "lon": -3.667113,
+   "x": 1.7926028510222616,
+   "y": -5.936100530000082,
+   "label": "4G+5G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 27,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (27 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0656",
+   "lat": 40.396869,
+   "lon": -3.667621,
+   "x": 1.7496216716047304,
+   "y": -6.252324889999645,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 29,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (29 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0658",
+   "lat": 40.390675,
+   "lon": -3.669778,
+   "x": 1.5671208763220108,
+   "y": -6.941035749999723,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 27,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (27 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0668",
+   "lat": 40.405303,
+   "lon": -3.640022,
+   "x": 4.084734999842029,
+   "y": -5.314548429999516,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 14,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (14 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0678",
+   "lat": 40.407494,
+   "lon": -3.633281,
+   "x": 4.655081713333365,
+   "y": -5.07093113999993,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0691",
+   "lat": 40.390705,
+   "lon": -3.624514,
+   "x": 5.396845492769464,
+   "y": -6.937700050000244,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0703",
+   "lat": 40.390602,
+   "lon": -3.584317,
+   "x": 8.79785822711328,
+   "y": -6.949152619999771,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 1,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (1 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0730",
+   "lat": 40.422156,
+   "lon": -3.781214,
+   "x": -7.86132540236388,
+   "y": -3.440663359999787,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 1,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (1 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0734",
+   "lat": 40.417984,
+   "lon": -3.794161,
+   "x": -8.956753217164723,
+   "y": -3.9045480400002384,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 11,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (11 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0753",
+   "lat": 40.411118,
+   "lon": -3.734658,
+   "x": -3.9222864477127874,
+   "y": -4.6679785799997,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 17,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (17 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0755",
+   "lat": 40.416679,
+   "lon": -3.724158,
+   "x": -3.0338959282558657,
+   "y": -4.049650989999683,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0756",
+   "lat": 40.413757,
+   "lon": -3.740239,
+   "x": -4.394487160959355,
+   "y": -4.374548170000261,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 15,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (15 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0757",
+   "lat": 40.413879,
+   "lon": -3.725194,
+   "x": -3.1215504595089523,
+   "y": -4.360982989999748,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 20,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (20 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0763",
+   "lat": 40.416071,
+   "lon": -3.709152,
+   "x": -1.7642589630205616,
+   "y": -4.117254509999652,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0764",
+   "lat": 40.413257,
+   "lon": -3.71947,
+   "x": -2.6372507134735526,
+   "y": -4.430143169999736,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0773",
+   "lat": 40.41758,
+   "lon": -3.704829,
+   "x": -1.3984958948670225,
+   "y": -3.949468799999802,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0802",
+   "lat": 40.42026,
+   "lon": -3.701939,
+   "x": -1.1539769804640925,
+   "y": -3.6514796000000223,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0819",
+   "lat": 40.425636,
+   "lon": -3.713911,
+   "x": -2.166911389886797,
+   "y": -3.0537221600002145,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0822",
+   "lat": 40.415977,
+   "lon": -3.712628,
+   "x": -2.058358529271257,
+   "y": -4.1277063700001255,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0843",
+   "lat": 40.422283,
+   "lon": -3.704236,
+   "x": -1.348322982672907,
+   "y": -3.426542229999887,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0856",
+   "lat": 40.425457,
+   "lon": -3.697331,
+   "x": -0.7641004553538765,
+   "y": -3.0736251699997377,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH0873",
+   "lat": 40.423017,
+   "lon": -3.687828,
+   "x": 0.039935269065094904,
+   "y": -3.3449287699997376,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH0883",
+   "lat": 40.408856,
+   "lon": -3.692453,
+   "x": -0.3513796026004455,
+   "y": -4.919490359999895,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0884",
+   "lat": 40.425297,
+   "lon": -3.686722,
+   "x": 0.13351240378122875,
+   "y": -3.0914155699998545,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH0887",
+   "lat": 40.416204,
+   "lon": -3.691927,
+   "x": -0.30687546800671506,
+   "y": -4.102466239999856,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0897",
+   "lat": 40.416256,
+   "lon": -3.696078,
+   "x": -0.6580858533653355,
+   "y": -4.096684360000233,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0911",
+   "lat": 40.417507,
+   "lon": -3.692394,
+   "x": -0.3463876939673227,
+   "y": -3.95758566999985,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0923",
+   "lat": 40.411133,
+   "lon": -3.693539,
+   "x": -0.44326456489855504,
+   "y": -4.66631072999996,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0924",
+   "lat": 40.420824,
+   "lon": -3.694886,
+   "x": -0.5572323772517425,
+   "y": -3.5887684399995523,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0926",
+   "lat": 40.415515,
+   "lon": -3.676499,
+   "x": 0.9984663352486608,
+   "y": -4.1790761499999975,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 35,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (35 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0930",
+   "lat": 40.418049,
+   "lon": -3.698219,
+   "x": -0.8392329107136434,
+   "y": -3.8973206899995247,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0932",
+   "lat": 40.420425,
+   "lon": -3.686386,
+   "x": 0.16194090040384124,
+   "y": -3.6331332499997293,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH0956",
+   "lat": 40.42585,
+   "lon": -3.663889,
+   "x": 2.0653810448059793,
+   "y": -3.0299275000002464,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 35,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (35 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0959",
+   "lat": 40.41836,
+   "lon": -3.66438,
+   "x": 2.0238382119437723,
+   "y": -3.862740599999925,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 31,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (31 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0961",
+   "lat": 40.413441,
+   "lon": -3.662733,
+   "x": 2.1631886105671736,
+   "y": -4.409684210000037,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 17,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (17 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0979",
+   "lat": 40.421795,
+   "lon": -3.675761,
+   "x": 1.0609074974733583,
+   "y": -3.4808029499995707,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 57,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (57 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0982",
+   "lat": 40.422768,
+   "lon": -3.671497,
+   "x": 1.4216786569937747,
+   "y": -3.372615080000151,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 54,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (54 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH0997",
+   "lat": 40.417938,
+   "lon": -3.648964,
+   "x": 3.328164711748349,
+   "y": -3.909662779999966,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1003",
+   "lat": 40.415373,
+   "lon": -3.621084,
+   "x": 5.687053062458711,
+   "y": -4.194865129999637,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1013",
+   "lat": 40.424126,
+   "lon": -3.599789,
+   "x": 7.488793644538282,
+   "y": -3.221619059999784,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1021",
+   "lat": 40.426102,
+   "lon": -3.565906,
+   "x": 10.35558754651532,
+   "y": -3.0019076199998853,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1027",
+   "lat": 40.41798,
+   "lon": -3.553598,
+   "x": 11.396950452560638,
+   "y": -3.9049927999999055,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1032",
+   "lat": 40.423965,
+   "lon": -3.533922,
+   "x": 13.061709677402018,
+   "y": -3.2395206499996196,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 11,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (11 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1034",
+   "lat": 40.426029,
+   "lon": -3.532802,
+   "x": 13.156471332810739,
+   "y": -3.0100244899999336,
+   "label": "4G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1047",
+   "lat": 40.437426,
+   "lon": -3.807607,
+   "x": -10.094400733794998,
+   "y": -1.7427920599996751,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 14,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (14 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1058",
+   "lat": 40.438535,
+   "lon": -3.813036,
+   "x": -10.55374093666467,
+   "y": -1.6194823499997215,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 11,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (11 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1082",
+   "lat": 40.435083,
+   "lon": -3.710514,
+   "x": -1.8794959046872484,
+   "y": -2.003310230000044,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 62,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (62 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1097",
+   "lat": 40.433941,
+   "lon": -3.703935,
+   "x": -1.3228557877818181,
+   "y": -2.130289210000214,
+   "label": "4G+5G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 73,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (73 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1112",
+   "lat": 40.430637,
+   "lon": -3.706928,
+   "x": -1.5760893901374944,
+   "y": -2.497660970000211,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH1116",
+   "lat": 40.440983,
+   "lon": -3.714639,
+   "x": -2.2285064659024822,
+   "y": -1.3472892299995975,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 50,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (50 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1120",
+   "lat": 40.437935,
+   "lon": -3.702936,
+   "x": -1.2383317755020429,
+   "y": -1.686196349999566,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 68,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (68 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1122",
+   "lat": 40.436134,
+   "lon": -3.704478,
+   "x": -1.368798268930873,
+   "y": -1.886449539999609,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 72,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (72 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1133",
+   "lat": 40.440099,
+   "lon": -3.715648,
+   "x": -2.3138765643912325,
+   "y": -1.4455811900003008,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 49,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (49 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1153",
+   "lat": 40.429522,
+   "lon": -3.707537,
+   "x": -1.627616040265984,
+   "y": -2.6216378200000605,
+   "label": "4G+5G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH1156",
+   "lat": 40.434045,
+   "lon": -3.718749,
+   "x": -2.5762478978041794,
+   "y": -2.1187254500001775,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 45,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (45 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1200",
+   "lat": 40.438526,
+   "lon": -3.6961,
+   "x": -0.6599472430251473,
+   "y": -1.6204830599995652,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1202",
+   "lat": 40.43779,
+   "lon": -3.681469,
+   "x": 0.5779614893724083,
+   "y": -1.7023188999999432,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 66,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (66 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1212",
+   "lat": 40.434833,
+   "lon": -3.695244,
+   "x": -0.5875222635342041,
+   "y": -2.0311077300001763,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1229",
+   "lat": 40.43251,
+   "lon": -3.689492,
+   "x": -0.10085347611359316,
+   "y": -2.289402099999839,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1243",
+   "lat": 40.437138,
+   "lon": -3.683953,
+   "x": 0.36779367505517574,
+   "y": -1.774814780000201,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1245",
+   "lat": 40.431171,
+   "lon": -3.699856,
+   "x": -0.9777372231280325,
+   "y": -2.43828551000001,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH1246",
+   "lat": 40.426819,
+   "lon": -3.699942,
+   "x": -0.9850135645254918,
+   "y": -2.9221843899997038,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Historic centre (Sol, Gran Via)"
+  },
+  {
+   "rrh_id": "RRH1267",
+   "lat": 40.432268,
+   "lon": -3.65522,
+   "x": 2.798853179393819,
+   "y": -2.3163100799998477,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 25,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (25 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1331",
+   "lat": 40.438835,
+   "lon": -3.635792,
+   "x": 4.442629466251834,
+   "y": -1.5861253500001944,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 24,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (24 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1334",
+   "lat": 40.434631,
+   "lon": -3.635308,
+   "x": 4.483580038767728,
+   "y": -2.053568109999563,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 29,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (29 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1346",
+   "lat": 40.434406,
+   "lon": -3.644972,
+   "x": 3.665922326383763,
+   "y": -2.0785858599996034,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 26,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (26 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1351",
+   "lat": 40.42906,
+   "lon": -3.632051,
+   "x": 4.759150317041182,
+   "y": -2.6730075999999325,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 19,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (19 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1358",
+   "lat": 40.434746,
+   "lon": -3.632226,
+   "x": 4.744343808383563,
+   "y": -2.040781260000245,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Julian Camarillo business area"
+  },
+  {
+   "rrh_id": "RRH1381",
+   "lat": 40.436272,
+   "lon": -3.619313,
+   "x": 5.836894930073795,
+   "y": -1.8711053199996368,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Julian Camarillo business area"
+  },
+  {
+   "rrh_id": "RRH1383",
+   "lat": 40.431698,
+   "lon": -3.624758,
+   "x": 5.3762009892697105,
+   "y": -2.3796883800002133,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Julian Camarillo business area"
+  },
+  {
+   "rrh_id": "RRH1399",
+   "lat": 40.439133,
+   "lon": -3.594022,
+   "x": 7.976731561272392,
+   "y": -1.5529907300001058,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 10,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (10 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1431",
+   "lat": 40.458154,
+   "lon": -3.810933,
+   "x": -10.375809006910586,
+   "y": 0.5619542600001362,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 7,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (7 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1434",
+   "lat": 40.448627,
+   "lon": -3.800186,
+   "x": -9.466520158091212,
+   "y": -0.4973528699996981,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 7,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (7 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1438",
+   "lat": 40.44878,
+   "lon": -3.798739,
+   "x": -9.34409148364794,
+   "y": -0.4803407999999866,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1441",
+   "lat": 40.461663,
+   "lon": -3.811105,
+   "x": -10.390361689705506,
+   "y": 0.9521199700002578,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 7,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (7 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1445",
+   "lat": 40.448621,
+   "lon": -3.77238,
+   "x": -7.113892845327471,
+   "y": -0.49802000999959384,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1450",
+   "lat": 40.446884,
+   "lon": -3.787278,
+   "x": -8.374392079505505,
+   "y": -0.6911570400002222,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1453",
+   "lat": 40.455112,
+   "lon": -3.782806,
+   "x": -7.996022326837733,
+   "y": 0.22371428000006324,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1467",
+   "lat": 40.444478,
+   "lon": -3.735653,
+   "x": -4.00647202550895,
+   "y": -0.958680180000286,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Ciudad Universitaria"
+  },
+  {
+   "rrh_id": "RRH1471",
+   "lat": 40.44692,
+   "lon": -3.732092,
+   "x": -3.705180726481708,
+   "y": -0.6871542000000577,
+   "label": "4G+5G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Ciudad Universitaria"
+  },
+  {
+   "rrh_id": "RRH1476",
+   "lat": 40.4576,
+   "lon": -3.700931,
+   "x": -1.068691490596255,
+   "y": 0.500355000000019,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 47,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (47 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1479",
+   "lat": 40.446468,
+   "lon": -3.702572,
+   "x": -1.2075342374942188,
+   "y": -0.737412079999577,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "AZCA / Nuevos Ministerios"
+  },
+  {
+   "rrh_id": "RRH1486",
+   "lat": 40.449861,
+   "lon": -3.700648,
+   "x": -1.0447472508813656,
+   "y": -0.36014441000007313,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "AZCA / Nuevos Ministerios"
+  },
+  {
+   "rrh_id": "RRH1490",
+   "lat": 40.447933,
+   "lon": -3.719028,
+   "x": -2.5998537030354565,
+   "y": -0.574518730000016,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Ciudad Universitaria"
+  },
+  {
+   "rrh_id": "RRH1511",
+   "lat": 40.448994,
+   "lon": -3.717419,
+   "x": -2.4637184320063166,
+   "y": -0.45654614000001836,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Ciudad Universitaria"
+  },
+  {
+   "rrh_id": "RRH1527",
+   "lat": 40.444486,
+   "lon": -3.684085,
+   "x": 0.35662533709626815,
+   "y": -0.9577906600001617,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1540",
+   "lat": 40.451795,
+   "lon": -3.688819,
+   "x": -0.04391187424745571,
+   "y": -0.1451029500002346,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1553",
+   "lat": 40.456595,
+   "lon": -3.698311,
+   "x": -0.8470169038365025,
+   "y": 0.3886090500001016,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "AZCA / Nuevos Ministerios"
+  },
+  {
+   "rrh_id": "RRH1579",
+   "lat": 40.452175,
+   "lon": -3.67839,
+   "x": 0.8384714331255437,
+   "y": -0.10285075000025408,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 45,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (45 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1584",
+   "lat": 40.457458,
+   "lon": -3.681133,
+   "x": 0.6063899859950208,
+   "y": 0.4845660200003797,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 44,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (44 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1589",
+   "lat": 40.455862,
+   "lon": -3.677682,
+   "x": 0.8983743367232049,
+   "y": 0.30710678000046143,
+   "label": "4G+5G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 43,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (43 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1598",
+   "lat": 40.446934,
+   "lon": -3.699635,
+   "x": -0.9590387179089657,
+   "y": -0.6855975400000376,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "AZCA / Nuevos Ministerios"
+  },
+  {
+   "rrh_id": "RRH1609",
+   "lat": 40.455154,
+   "lon": -3.657062,
+   "x": 2.6430040996948128,
+   "y": 0.22838426000012346,
+   "label": "4G+5G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 22,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (22 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1620",
+   "lat": 40.45229,
+   "lon": -3.65395,
+   "x": 2.9063061279376465,
+   "y": -0.09006390000014562,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 27,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (27 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1627",
+   "lat": 40.447046,
+   "lon": -3.676103,
+   "x": 1.0319713491253462,
+   "y": -0.6731442599998769,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 53,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (53 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1637",
+   "lat": 40.45713,
+   "lon": -3.671759,
+   "x": 1.3995111983177844,
+   "y": 0.44809570000002225,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 32,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (32 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1644",
+   "lat": 40.458455,
+   "lon": -3.645935,
+   "x": 3.5844442244564236,
+   "y": 0.5954224500001727,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 20,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (20 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1646",
+   "lat": 40.452824,
+   "lon": -3.652772,
+   "x": 3.0059750833586154,
+   "y": -0.030688439999944278,
+   "label": "4G+5G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 25,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (25 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1658",
+   "lat": 40.448318,
+   "lon": -3.641778,
+   "x": 3.936162261540481,
+   "y": -0.5317105799998589,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1668",
+   "lat": 40.457764,
+   "lon": -3.623664,
+   "x": 5.468762820535007,
+   "y": 0.5185901599998026,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Campo de las Naciones / IFEMA"
+  },
+  {
+   "rrh_id": "RRH1695",
+   "lat": 40.461201,
+   "lon": -3.59315,
+   "x": 8.050510278697747,
+   "y": 0.9007501900003855,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1710",
+   "lat": 40.459866,
+   "lon": -3.581922,
+   "x": 9.000495874170355,
+   "y": 0.7523115399998821,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH1712",
+   "lat": 40.445484,
+   "lon": -3.558492,
+   "x": 10.982875861872795,
+   "y": -0.8468230399998593,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1715",
+   "lat": 40.461319,
+   "lon": -3.574597,
+   "x": 9.620254022267707,
+   "y": 0.9138706100004418,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH1722",
+   "lat": 40.448624,
+   "lon": -3.544742,
+   "x": 12.146244399256895,
+   "y": -0.49768643999964596,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 5,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (5 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1729",
+   "lat": 40.474644,
+   "lon": -3.845331,
+   "x": -13.28617634865147,
+   "y": 2.3954773599998527,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 2,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (2 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1743",
+   "lat": 40.462692,
+   "lon": -3.801858,
+   "x": -9.607985772237125,
+   "y": 1.066534479999758,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 10,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (10 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1745",
+   "lat": 40.467569,
+   "lon": -3.799947,
+   "x": -9.446298697695946,
+   "y": 1.6088081099998097,
+   "label": "4G+5G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1749",
+   "lat": 40.463791,
+   "lon": -3.780958,
+   "x": -7.839665595413327,
+   "y": 1.1887322900001487,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1757",
+   "lat": 40.475204,
+   "lon": -3.769583,
+   "x": -6.877242532668313,
+   "y": 2.4577437599998655,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 3,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (3 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1759",
+   "lat": 40.470642,
+   "lon": -3.751469,
+   "x": -5.344641973673787,
+   "y": 1.9504949799998705,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 1,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (1 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1763",
+   "lat": 40.474978,
+   "lon": -3.74583,
+   "x": -4.867533960414971,
+   "y": 2.4326148200001056,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 4,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (4 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1765",
+   "lat": 40.471967,
+   "lon": -3.72848,
+   "x": -3.3995743877884923,
+   "y": 2.097821730000021,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1785",
+   "lat": 40.47734,
+   "lon": -3.703976,
+   "x": -1.3263247412387418,
+   "y": 2.695245599999881,
+   "label": "4G+5G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 13,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (13 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1801",
+   "lat": 40.464617,
+   "lon": -3.695233,
+   "x": -0.5865915687042795,
+   "y": 1.280575229999753,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1805",
+   "lat": 40.473618,
+   "lon": -3.687913,
+   "x": 0.032743536288548085,
+   "y": 2.2813964200003003,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Cuatro Torres Business Area"
+  },
+  {
+   "rrh_id": "RRH1811",
+   "lat": 40.479221,
+   "lon": -3.678313,
+   "x": 0.8449862969348658,
+   "y": 2.904393990000377,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 21,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (21 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1816",
+   "lat": 40.478421,
+   "lon": -3.687519,
+   "x": 0.06607933292340842,
+   "y": 2.8154419899997944,
+   "label": "4G",
+   "operators": [
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Cuatro Torres Business Area"
+  },
+  {
+   "rrh_id": "RRH1830",
+   "lat": 40.469051,
+   "lon": -3.68515,
+   "x": 0.26651715583705776,
+   "y": 1.7735916900001287,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1838",
+   "lat": 40.467569,
+   "lon": -3.688344,
+   "x": -0.0037227793196233515,
+   "y": 1.6088081099998097,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Paseo de la Castellana axis (Colon - Plaza de Castilla)"
+  },
+  {
+   "rrh_id": "RRH1841",
+   "lat": 40.468285,
+   "lon": -3.680789,
+   "x": 0.635495351584858,
+   "y": 1.688420150000272,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 33,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (33 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1880",
+   "lat": 40.470745,
+   "lon": -3.6479,
+   "x": 3.4181882843866465,
+   "y": 1.9619475500001875,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 16,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (16 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1894",
+   "lat": 40.466694,
+   "lon": -3.64385,
+   "x": 3.7608531990343086,
+   "y": 1.5115168599997402,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 18,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (18 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1902",
+   "lat": 40.472747,
+   "lon": -3.612596,
+   "x": 6.405211036663533,
+   "y": 2.184549929999898,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 21,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (21 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH1909",
+   "lat": 40.46806,
+   "lon": -3.617011,
+   "x": 6.031663975387097,
+   "y": 1.6634024000002317,
+   "label": "4G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Campo de las Naciones / IFEMA"
+  },
+  {
+   "rrh_id": "RRH1918",
+   "lat": 40.467865,
+   "lon": -3.616372,
+   "x": 6.085728884142624,
+   "y": 1.6417203500004598,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Campo de las Naciones / IFEMA"
+  },
+  {
+   "rrh_id": "RRH1947",
+   "lat": 40.472507,
+   "lon": -3.575944,
+   "x": 9.506286209914519,
+   "y": 2.157864330000118,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH1949",
+   "lat": 40.468239,
+   "lon": -3.571097,
+   "x": 9.916384195420001,
+   "y": 1.6833054099997546,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH1958",
+   "lat": 40.473682,
+   "lon": -3.575707,
+   "x": 9.526338453067961,
+   "y": 2.288512579999715,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH1976",
+   "lat": 40.486263,
+   "lon": -3.741506,
+   "x": -4.50168628364052,
+   "y": 3.6873939700002034,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 3,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (3 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2032",
+   "lat": 40.486588,
+   "lon": -3.667072,
+   "x": 1.796071804479185,
+   "y": 3.723530719999823,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 12,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (12 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2035",
+   "lat": 40.482285,
+   "lon": -3.651455,
+   "x": 3.117404637084804,
+   "y": 3.2450801499998043,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 6,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (6 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2044",
+   "lat": 40.48392,
+   "lon": -3.586117,
+   "x": 8.645562709492072,
+   "y": 3.4268757999998347,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH2057",
+   "lat": 40.490217,
+   "lon": -3.592142,
+   "x": 8.135795768565622,
+   "y": 4.127039230000229,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH2061",
+   "lat": 40.491349,
+   "lon": -3.592777,
+   "x": 8.082069294293708,
+   "y": 4.252906310000046,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "traffic": "mixed",
+   "traffic_reason": "Madrid-Barajas airport"
+  },
+  {
+   "rrh_id": "RRH2074",
+   "lat": 40.504002,
+   "lon": -3.750553,
+   "x": -5.267140476928771,
+   "y": 5.659793380000075,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 0,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (0 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2121",
+   "lat": 40.499985,
+   "lon": -3.664233,
+   "x": 2.0362756792161796,
+   "y": 5.213143150000353,
+   "label": "4G",
+   "operators": [
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 11,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (11 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2134",
+   "lat": 40.510245,
+   "lon": -3.627468,
+   "x": 5.146911626628924,
+   "y": 6.3539525499998275,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 4,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (4 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2142",
+   "lat": 40.504561,
+   "lon": -3.52925,
+   "x": 13.457001154249882,
+   "y": 5.721948590000368,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 2,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (2 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2177",
+   "lat": 40.524956,
+   "lon": -3.650958,
+   "x": 3.1594551216724103,
+   "y": 7.989668640000436,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Arroyo de la Vega business park"
+  },
+  {
+   "rrh_id": "RRH2179",
+   "lat": 40.530827,
+   "lon": -3.649814,
+   "x": 3.256247383982768,
+   "y": 8.642465130000332,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "traffic": "office",
+   "traffic_reason": "Arroyo de la Vega business park"
+  },
+  {
+   "rrh_id": "RRH2203",
+   "lat": 40.527022,
+   "lon": -3.549649,
+   "x": 11.73106989649734,
+   "y": 8.21938718000035,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 0,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (0 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2208",
+   "lat": 40.544335,
+   "lon": -3.695422,
+   "x": -0.6025825980545225,
+   "y": 10.144419649999723,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 2,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (2 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2211",
+   "lat": 40.551937,
+   "lon": -3.683969,
+   "x": 0.36643993712076384,
+   "y": 10.989686030000353,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 1,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (1 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2219",
+   "lat": 40.544936,
+   "lon": -3.630326,
+   "x": 4.905100188094818,
+   "y": 10.211244840000077,
+   "label": "4G+5G",
+   "operators": [
+    "Ds Mobile Networks, S.L.",
+    "Movistar",
+    "Orange",
+    "Vodafone"
+   ],
+   "is_synthetic": false,
+   "local_density": 19,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (19 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2229",
+   "lat": 40.544724,
+   "lon": -3.638528,
+   "x": 4.211140279467623,
+   "y": 10.187672560000337,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 21,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (21 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2253",
+   "lat": 40.534649,
+   "lon": -3.627567,
+   "x": 5.138535373159752,
+   "y": 9.067433310000283,
+   "label": "4G+5G",
+   "operators": [
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 11,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (11 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2255",
+   "lat": 40.543148,
+   "lon": -3.610224,
+   "x": 6.605902685439882,
+   "y": 10.012437120000335,
+   "label": "4G+5G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 8,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (8 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2257",
+   "lat": 40.545701,
+   "lon": -3.612164,
+   "x": 6.441761960892617,
+   "y": 10.296305190000215,
+   "label": "4G",
+   "operators": [
+    "Movistar",
+    "Orange"
+   ],
+   "is_synthetic": false,
+   "local_density": 9,
+   "traffic": "residential",
+   "traffic_reason": "urban fabric (9 sites within 1 km)"
+  },
+  {
+   "rrh_id": "RRH2300",
+   "lat": 40.57822,
+   "lon": -3.698461,
+   "x": -0.8597081969716094,
+   "y": 13.912092800000284,
+   "label": "4G",
+   "operators": [
+    "Movistar"
+   ],
+   "is_synthetic": false,
+   "local_density": 0,
+   "traffic": "mixed",
+   "traffic_reason": "outskirts (0 sites within 1 km)"
+  }
+ ],
+ "pools": [
+  {
+   "pool_id": "P01",
+   "site_rrh": "RRH1540",
+   "lat": 40.451795,
+   "lon": -3.688819,
+   "x": -0.04391187424745571,
+   "y": -0.1451029500002346,
+   "ff_order": 1
+  },
+  {
+   "pool_id": "P02",
+   "site_rrh": "RRH0015",
+   "lat": 40.325631,
+   "lon": -3.838653,
+   "x": -12.721159978276868,
+   "y": -14.173278109999758,
+   "ff_order": 2
+  },
+  {
+   "pool_id": "P03",
+   "site_rrh": "RRH0202",
+   "lat": 40.33694,
+   "lon": -3.526176,
+   "x": 13.717088054898529,
+   "y": -12.915830400000079,
+   "ff_order": 3
+  },
+  {
+   "pool_id": "P04",
+   "site_rrh": "RRH2142",
+   "lat": 40.504561,
+   "lon": -3.52925,
+   "x": 13.457001154249882,
+   "y": 5.721948590000368,
+   "ff_order": 4
+  },
+  {
+   "pool_id": "P05",
+   "site_rrh": "RRH2300",
+   "lat": 40.57822,
+   "lon": -3.698461,
+   "x": -0.8597081969716094,
+   "y": 13.912092800000284,
+   "ff_order": 5
+  },
+  {
+   "pool_id": "P06",
+   "site_rrh": "RRH1729",
+   "lat": 40.474644,
+   "lon": -3.845331,
+   "x": -13.28617634865147,
+   "y": 2.3954773599998527,
+   "ff_order": 6
+  },
+  {
+   "pool_id": "P07",
+   "site_rrh": "RRH0079",
+   "lat": 40.319338,
+   "lon": -3.676247,
+   "x": 1.019787707715639,
+   "y": -14.872996779999696,
+   "ff_order": 7
+  },
+  {
+   "pool_id": "P08",
+   "site_rrh": "RRH1027",
+   "lat": 40.41798,
+   "lon": -3.553598,
+   "x": 11.396950452560638,
+   "y": -3.9049927999999055,
+   "ff_order": 8
+  },
+  {
+   "pool_id": "P09",
+   "site_rrh": "RRH0332",
+   "lat": 40.388,
+   "lon": -3.755764,
+   "x": -5.708036000442115,
+   "y": -7.238469000000116,
+   "ff_order": 9
+  },
+  {
+   "pool_id": "P10",
+   "site_rrh": "RRH2134",
+   "lat": 40.510245,
+   "lon": -3.627468,
+   "x": 5.146911626628924,
+   "y": 6.3539525499998275,
+   "ff_order": 10
+  },
+  {
+   "pool_id": "P11",
+   "site_rrh": "RRH2074",
+   "lat": 40.504002,
+   "lon": -3.750553,
+   "x": -5.267140476928771,
+   "y": 5.659793380000075,
+   "ff_order": 11
+  },
+  {
+   "pool_id": "P12",
+   "site_rrh": "RRH0466",
+   "lat": 40.392229,
+   "lon": -3.864974,
+   "x": -14.94814348900315,
+   "y": -6.768246489999865,
+   "ff_order": 12
+  },
+  {
+   "pool_id": "P13",
+   "site_rrh": "RRH0658",
+   "lat": 40.390675,
+   "lon": -3.669778,
+   "x": 1.5671208763220108,
+   "y": -6.941035749999723,
+   "ff_order": 13
+  },
+  {
+   "pool_id": "P14",
+   "site_rrh": "RRH0292",
+   "lat": 40.364075,
+   "lon": -3.596985,
+   "x": 7.726036217543714,
+   "y": -9.89868974999994,
+   "ff_order": 14
+  },
+  {
+   "pool_id": "P15",
+   "site_rrh": "RRH1445",
+   "lat": 40.448621,
+   "lon": -3.77238,
+   "x": -7.113892845327471,
+   "y": -0.49802000999959384,
+   "ff_order": 15
+  },
+  {
+   "pool_id": "P16",
+   "site_rrh": "RRH1381",
+   "lat": 40.436272,
+   "lon": -3.619313,
+   "x": 5.836894930073795,
+   "y": -1.8711053199996368,
+   "ff_order": 16
+  },
+  {
+   "pool_id": "P17",
+   "site_rrh": "RRH0141",
+   "lat": 40.340343,
+   "lon": -3.769083,
+   "x": -6.834938222218007,
+   "y": -12.537450830000221,
+   "ff_order": 17
+  },
+  {
+   "pool_id": "P18",
+   "site_rrh": "RRH1949",
+   "lat": 40.468239,
+   "lon": -3.571097,
+   "x": 9.916384195420001,
+   "y": 1.6833054099997546,
+   "ff_order": 18
+  },
+  {
+   "pool_id": "P19",
+   "site_rrh": "RRH0822",
+   "lat": 40.415977,
+   "lon": -3.712628,
+   "x": -2.058358529271257,
+   "y": -4.1277063700001255,
+   "ff_order": 19
+  },
+  {
+   "pool_id": "P20",
+   "site_rrh": "RRH2032",
+   "lat": 40.486588,
+   "lon": -3.667072,
+   "x": 1.796071804479185,
+   "y": 3.723530719999823,
+   "ff_order": 20
+  },
+  {
+   "pool_id": "P21",
+   "site_rrh": "RRH2257",
+   "lat": 40.545701,
+   "lon": -3.612164,
+   "x": 6.441761960892617,
+   "y": 10.296305190000215,
+   "ff_order": 21
+  },
+  {
+   "pool_id": "P22",
+   "site_rrh": "RRH1765",
+   "lat": 40.471967,
+   "lon": -3.72848,
+   "x": -3.3995743877884923,
+   "y": 2.097821730000021,
+   "ff_order": 22
+  },
+  {
+   "pool_id": "P23",
+   "site_rrh": "RRH0258",
+   "lat": 40.359696,
+   "lon": -3.693669,
+   "x": -0.4542636856156377,
+   "y": -10.385590759999955,
+   "ff_order": 23
+  },
+  {
+   "pool_id": "P24",
+   "site_rrh": "RRH0734",
+   "lat": 40.417984,
+   "lon": -3.794161,
+   "x": -8.956753217164723,
+   "y": -3.9045480400002384,
+   "ff_order": 24
+  },
+  {
+   "pool_id": "P25",
+   "site_rrh": "RRH0187",
+   "lat": 40.336681,
+   "lon": -3.623566,
+   "x": 5.477054465383303,
+   "y": -12.944628610000054,
+   "ff_order": 25
+  }
+ ]
+}

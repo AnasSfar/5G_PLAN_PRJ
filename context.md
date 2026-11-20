@@ -58,6 +58,26 @@ Extra deliverable: a **5G link budget in Excel**.
 
 Full reasoning and limits: `week1.txt`.
 
+## Phase 1: minimise delay (week 2, done)
+
+Instructions: professor's review "Project review phase 1 - min delay" (200 us round trip, about 200
+RRHs and 19 pools, capacity ignored). Code: `python/07_scenario.py` .. `12_basemap_figures.py` + `p1_lib.py` (11 = interactive maps, 12 = static maps over a basemap, needs internet);
+parameters in the phase-1 block of `python/config.py`; outputs in `phase1/`. Full reasoning: `week2.txt`.
+
+- **RRHs:** 200 of the 2,085 core RRHs, simple random sample (seed 42), keeps the real density. Synthetic
+  RRHs: variable `N_SYNTHETIC` (0 in the reference), uniform, >= 200 m apart, ids `SYNxxx`.
+- **Traffic pattern:** `TRAFFIC_MODE` "geo" (reference; business districts -> office, historic centre,
+  airport and isolated sites -> mixed, rest -> residential: 120 / 30 / 50) or "random" (`TRAFFIC_SHARES`).
+- **Delay:** d_max = v RTT / 2, v = 2e8 m/s, 200 us -> 20 km, straight lines (`ROUTE_FACTOR` = 1).
+- **Pools:** 25 candidates by farthest-first k-center on real RRH sites (P01 = nearest the Bernabeu),
+  fixed. Backward elimination (remove the pool that raises the mean delay least, never unserve an RRH)
+  and K = smallest K within 10 % of the 25-pool mean delay -> **K = 19** (P06, P07, P10, P11, P24, P25 off).
+- **Numbers:** K = 19: 0 unserved, mean RTT 19.9 us (std 11.2), max 68.2 us, mean 1.99 km. K = 25: 18.2 us.
+  K = 1 still serves everything (71.3 us): 200 us is not binding in 30 x 30 km. Smallest K serving all:
+  1 / 2 / 6 / 17 for 200 / 150 / 100 / 50 us. Every RRH reaches 10-19 pools (mean 16.8), so category 1
+  ("only this pool") is empty at 200 us; at 50 us 50 RRHs have one option and 1 is unserved.
+- **Baseline for phase 2:** `phase1/data/assignment_K19.csv`. Suggested K cases: 8 / 19 / 25.
+
 ## Phase 2: load balancing (professor's review, not started)
 
 Use the BBU pools to spread the RRHs evenly so the network is more resilient to faults.
@@ -96,14 +116,15 @@ After balancing:
 
 Phase 1, still open:
 - [ ] Check a few Madrid sites by eye on the Infoantenas portal against the dataset.
-- [ ] Synthetic RRH injection (variable count, labelled).
-- [ ] RRH-to-candidate distance matrix and conversion to fronthaul delay.
-- [ ] Farthest-first k-center for several K, then RRH-to-pool assignment by delay (this is the baseline for phase 2).
+- [x] Synthetic RRH injection (variable count, labelled).
+- [x] RRH-to-candidate distance matrix and conversion to fronthaul delay.
+- [x] Farthest-first k-center for several K, then RRH-to-pool assignment by delay (this is the baseline for phase 2).
+- [ ] Check the office / mixed zones of the geographic traffic rule on `phase1/maps/map02_traffic_patterns.html`.
 - [ ] 5G link budget in Excel.
 
 Phase 2:
 - [ ] Define the 24 h traffic profiles (residential, office, mixed), the conversion to Mbps or GOPS, and how each RRH gets its profile.
-- [ ] Build the list of possible pools for each RRH (within the delay limit).
+- [x] Build the list of possible pools for each RRH (within the delay limit): `options` column of `phase1/data/assignment_K19.csv`.
 - [ ] Implement algorithms A and B, then produce the figures listed above.
 
 Every week:

@@ -16,3 +16,6 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Phase 1: local copies of Leaflet downloaded by python/11_maps.py
+python/web_cache/

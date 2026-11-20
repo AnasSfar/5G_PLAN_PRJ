@@ -1,0 +1,106 @@
+WEEK 2 - PHASE 1: MINIMISE DELAY
+================================
+Goal (professor's review "Project review phase 1 - min delay", thesis section 3.3.3): assign each
+RRH to the closest BBU pool so that the round-trip fronthaul delay stays below 200 us; give for each
+RRH the list of possible pools and the optimal one; mark too-far RRHs as unserved; no capacity limit.
+Then decide how many pools are needed and which ones are not relevant.
+
+
+1. NEW FILES
+------------
+  python/config.py         phase-1 block added at the end: every phase-1 parameter is there
+  python/p1_lib.py         shared functions: projection, sampling, synthetic RRHs, traffic pattern,
+                           farthest-first k-center, Minimise Delay algorithm, categories, backward elimination
+  python/07_scenario.py    builds the scenario -> phase1/data/scenario.json, rrhs.csv, pool_candidates.csv
+  python/08_min_delay.py   algorithm + choice of K -> k_analysis.csv, assignment_*.csv,
+                           pool_categories_*.csv, results.json
+  python/09_figures.py     figures fig01..fig12 -> phase1/figures/ (plain km axes)
+  python/10_robustness.py  synthetic RRHs, full dataset, invariant checks -> robustness.csv, fig13, fig14
+  python/11_maps.py        the map figures (fig01, 02, 03, 11, 12c) on a real street map, interactive:
+                           phase1/maps/map01_scenario.html .. map05_options_50us.html. Open them in a browser
+                           (Chrome / Firefox / Edge), not in a chat or file preview: previews block map images.
+                           Leaflet and the municipal boundaries (data/municipalities_madrid.geojson, IGN) are
+                           embedded, so the RRHs, links and boundaries always show; only the Esri background
+                           tiles need internet (a notice appears if they cannot load). OSM's own tile server
+                           is not used because it refuses pages opened from disk. One layer per pool in map03.
+  python/12_basemap_figures.py  the same as static PNGs over Esri / OSM tiles (contextily, needs internet)
+                           -> phase1/figures/map_fig*.png, for the report and the poster
+Run from python/:  python 07_scenario.py && python 08_min_delay.py && python 09_figures.py && python 10_robustness.py
+&& python 11_maps.py  (about 10 s, no internet needed); then python 12_basemap_figures.py with internet. 07 accepts --n-real, --n-synth, --mode for quick tests.
+
+
+2. DECISIONS AND REASONS
+------------------------
+- RRHs: the review asks for "around 200" RRHs and 19 pools (as in the thesis, 200 sites / 19 pools in
+  Porto). We draw 200 of the 2,085 real core RRHs at random (seed 42). A simple random sample keeps the
+  real density (dense centre, sparse edges), so the scenario stays realistic. N_RRH_REAL = None runs
+  the full 2,085 (done in step 10 as a check).
+- Synthetic RRHs: N_SYNTHETIC (variable), uniform in the 30 x 30 km box, at least 200 m from any other
+  RRH, id SYN001..., is_synthetic = true, drawn as triangles. Reference run: 0. Step 10 adds 50 to 400.
+- Traffic pattern, two modes (TRAFFIC_MODE):
+    random: exact shares from TRAFFIC_SHARES (input; default 50 % mixed, 30 % office, 20 % residential);
+    geo (reference): office if inside a known business district (Castellana axis Colon - Plaza de
+    Castilla, AZCA, Cuatro Torres, Distrito Telefonica, Arroyo de la Vega, IFEMA / Campo de las
+    Naciones, Julian Camarillo, Mendez Alvaro, Ciudad Universitaria, Ciudad de la Imagen); mixed if in
+    the historic centre (Sol / Gran Via) or at the airport, or if the site is isolated (<= 4 real core
+    RRHs within 1 km: large cells covering several land uses, as the thesis observes for its outer
+    cells); residential otherwise. Result: 120 residential, 30 office, 50 mixed (60 / 15 / 25 %).
+    Why a rule: OpenStreetMap land-use data could not be downloaded from our environment, and the
+    operators' traffic is not public. The zone centres are approximate and drawn on fig02.
+- Delay -> distance, thesis eq. (3.3): d_max = v * RTT / 2 with v = 2e8 m/s (200 km/ms, thesis
+  section 4.1). RTT = 200 us -> d_max = 20 km. Straight lines, as in the thesis; ROUTE_FACTOR in
+  config.py can lengthen the fibre if wanted (1.5 would give 13.3 km).
+- Candidate pools: 25 (review: "start with a large number, 25 for example, and fix the positions").
+  Every real RRH is a candidate site; farthest-first k-center starts at the RRH nearest the centre
+  (Bernabeu) and then always takes the RRH farthest from the pools already chosen. The positions are
+  computed once and saved, so adding synthetic RRHs never moves them. Ids P01..P25 follow that order.
+- Minimise Delay algorithm (thesis fig. 3.5, without capacity): distance to every pool -> list of
+  possible pools (d <= d_max) -> 0: unserved; 1: that pool; > 1: the nearest.
+- Reducing the number of pools: backward elimination. Start with the 25 pools and remove, one at a
+  time, the pool whose removal increases the mean RTT the least, never leaving an extra RRH unserved.
+  The removal order ranks the pools from least to most relevant. We also evaluate the farthest-first
+  prefixes (first K candidates = k-center solution for K) for comparison.
+- Choice of K (K_ACTIVE = "auto"): the smallest K whose mean RTT is within 10 % (KNEE_TOL) of the
+  25-pool value. A pure delay criterion would give K = 1 (see results), which is useless for the load
+  balancing of phase 2, so we keep the pools that still bring a visible delay reduction.
+- Three categories per pool (review 3c): 1 = RRHs that can only reach this pool; 2 = RRHs for which
+  it is the nearest pool but which have alternatives; 3 = RRHs that can reach it but have a nearer one.
+
+
+3. RESULTS (reference: 200 real RRHs, geo traffic, RTT <= 200 us, d_max = 20 km)
+--------------------------------------------------------------------------------
+- 25 pools: 0 unserved, mean RTT 18.2 us (std 10.2), max 37.8 us, mean distance 1.82 km.
+- Removal order (least relevant first): P25 P11 P10 P07 P06 P24 | P04 P02 P05 P22 P03 P17 P08 P20 P13
+  P09 P12 P18 P14 P19 P21 P15 P16 P23 (P01 is the last pool standing).
+- Selected K = 19 (P25, P11, P10, P07, P06, P24 switched off): 0 unserved, mean RTT 19.9 us (std 11.2),
+  max 68.2 us, mean distance 1.99 km. Same number of pools as the thesis and the review.
+- Mean RTT vs K (backward elimination): K=1 71.3 us, 4 43.3, 8 29.7, 12 24.5, 16 21.5, 19 19.9, 25 18.2.
+  Farthest-first prefixes are worse at intermediate K (K=8: 43.7 us) because k-center first places
+  pools at the edges, where there are few RRHs; it minimises the maximum, not the mean.
+- Smallest K that serves all 200 RRHs: 1 at 200 us (one pool at the centre, max RTT 189 us),
+  2 at 150 us, 6 at 100 us, 17 at 50 us. With 200 us the delay is NOT the binding constraint in a
+  30 x 30 km area: only the box corners (21.2 km from the centre) are beyond 20 km of a central pool.
+- Options per RRH with K = 19 at 200 us: 10 to 19 reachable pools (mean 16.8); no RRH has a single
+  option, so category 1 is empty for every pool. Category 2 (assigned): P19 33, P01 32, P16 18, P15 16,
+  P13 14, P23 14, P18 12, P09 10, P20 / P21 / P22 8, P14 6, P08 / P17 4, P03 / P05 / P12 3, P02 / P04 2.
+  The edge pools P02, P03, P04, P05, P12 serve only 2-3 RRHs each.
+- Strict budget 50 us (d_max 5 km) with the same 19 pools: 1 RRH unserved (RRH1729 in the west,
+  6.8 km from P15; it was covered by P06, switched off), 50 RRHs with a single option, mean 2.35
+  options. Exclusive RRHs sit around the peripheral pools (P15 9, P18 6, P21 6, P23 5); the central
+  pools P01, P19, P13, P09 have none.
+- Robustness (same 19 pools): +50 / +100 / +200 / +400 synthetic RRHs -> 0 unserved at 200 us, mean RTT
+  23.5 / 25.7 / 29.0 / 30.6 us; at 50 us 12 / 20 / 40 / 68 unserved, almost all synthetic (uniform sites
+  fall where the real network, and therefore the pools, are sparse). All 2,085 real RRHs -> 0 unserved,
+  mean 21.7 us, max 99.9 us; 33 unserved at 50 us. Every invariant check passed.
+- Comparison with the thesis (Porto, 19 pools, 150 us): mean 23.1 us, std 17.6 us (table 4.4); our
+  19.9 / 11.2 us is of the same order. Its 1-pool case is about 55 us mean with 24 RRHs unserved
+  (fig. 4.17); ours is 71 us with none unserved, because our limit is 200 us instead of 150 us.
+
+
+4. OPEN POINTS
+--------------
+- Check the office / mixed zones on the interactive map (phase1/maps/map02_traffic_patterns.html) and adjust
+  OFFICE_ZONES / MIXED_ZONES in config.py if a district is misplaced.
+- Phase 2 uses assignment_K19.csv as the delay-only baseline. Suggested K values for the comparison
+  "normal / too few / too many": 19 / 8 / 25 (all three serve every RRH at 200 us).
+- 5G link budget in Excel: not started.

@@ -1,0 +1,7 @@
+variant,n_rrh,n_synthetic,unserved_200us,unserved_synthetic_200us,mean_rtt_200us,std_rtt_200us,max_rtt_200us,single_option_200us,mean_options_200us,unserved_50us,unserved_synthetic_50us,mean_rtt_50us,std_rtt_50us,max_rtt_50us,single_option_50us,mean_options_50us,k_selected_auto,checks
+reference: 200 real,200,0,0,0,19.94,11.17,68.17,0,16.8,1,0,19.7,10.66,47.23,50,2.35,19,passed
+200 real + 50 synthetic,250,50,0,0,23.47,17.25,132.61,0,16.2,12,11,20.71,10.73,47.23,67,2.16,19,passed
+200 real + 100 synthetic,300,100,0,0,25.66,18.94,132.61,0,15.75,20,19,21.83,11.12,49.41,88,2.03,20,passed
+200 real + 200 synthetic,400,200,0,0,29.0,21.97,132.61,0,15.25,40,39,23.17,11.65,49.41,124,1.86,19,passed
+200 real + 400 synthetic,600,400,0,0,30.64,22.84,136.78,0,14.98,68,67,24.08,11.54,49.58,206,1.74,19,passed
+"all 2,085 real",2085,0,0,0,21.66,11.42,99.9,0,16.61,33,0,20.94,9.83,49.78,518,2.31,17,passed

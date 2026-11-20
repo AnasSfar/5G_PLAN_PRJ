@@ -6,7 +6,7 @@ RRH stays within the maximum fronthaul delay while load and traffic stay balance
 follows the reference thesis in `docs/`.
 
 The project has two phases:
-1. **Scenario and delay:** build the real RRH dataset (done, week 1), then place K BBU pools and assign RRHs within the delay limit.
+1. **Scenario and delay:** build the real RRH dataset (done, week 1), then place K BBU pools and assign RRHs within the delay limit (done, week 2: 19 pools, see `week2.txt`).
 2. **Load balancing:** rebalance the RRH-to-pool assignment using 24 h traffic profiles (residential, office, mixed), by traffic load and by number of RRHs, then compare with the delay-only assignment.
    Instructions: `docs/Project review_phase2_RRH_balancing_and_load_balancing.pdf`.
 
@@ -45,6 +45,17 @@ band rules) are in `python/config.py`.
 | `04_map.py` | Folium map and density figure | `maps/rrh_map.html`, `maps/density.png` |
 | `05_spotcheck.py` | Spot check against OpenCelliD in 3 small areas | `data/spotcheck_opencellid.csv` |
 | `06_checks.py` | Cap test, rule sensitivity, raw-data manifest | `data/raw/manifest.json` |
+| `07_scenario.py` | Phase 1: 200 real RRHs + synthetic RRHs, traffic pattern, 25 candidate pools (farthest-first) | `phase1/data/scenario.json` |
+| `08_min_delay.py` | Phase 1: Minimise Delay algorithm, pool reduction, choice of K, options and categories | `phase1/data/*.csv`, `results.json` |
+| `09_figures.py` | Phase 1: figures (plain x/y km axes) | `phase1/figures/fig*.png` |
+| `10_robustness.py` | Phase 1: synthetic RRHs, full dataset, consistency checks | `phase1/data/robustness.csv`, fig13-14 |
+| `11_maps.py` | Phase 1: the map figures on a real street map, interactive. Open the HTML in a browser (Chrome / Firefox / Edge): Leaflet and the municipal boundaries are embedded, only the background tiles (Esri) need internet | `phase1/maps/map01..map05*.html` |
+| `12_basemap_figures.py` | Phase 1: the map figures as static PNGs over a basemap, **needs internet** and `pip install contextily` | `phase1/figures/map_fig*.png` |
+
+Phase 1 (about 10 s, no internet): `python 07_scenario.py && python 08_min_delay.py && python 09_figures.py && python 10_robustness.py && python 11_maps.py`.
+Then, with internet, `python 12_basemap_figures.py` (options `--basemap grey|osm|satellite`) for static map PNGs.
+Phase-1 settings (number of RRHs, synthetic RRHs, traffic shares, delay budget, number of candidate pools, K)
+are in the phase-1 block at the end of `python/config.py`.
 
 Steps 01 and 02 only need to be run again to re-scrape (they resume where they stopped).
 Unzipping `data/raw.zip` is enough for everything else.
@@ -61,12 +72,14 @@ export OPENCELLID_KEY="your-key"      # macOS / Linux
 
 ```
 python/        code: config.py + numbered steps 01..06
-data/          rrh_master.csv, spot check, raw.zip (raw API answers, never edited)
+data/          rrh_master.csv, spot check, raw.zip (raw API answers, never edited),
+               municipalities_madrid.geojson (IGN municipal boundaries via es-atlas, MIT; offline map layer)
 json/          rrh_master.json: the master dataset, source of truth for the simulator
 maps/          rrh_map.html, density.png
+phase1/        phase-1 outputs: data/ (CSV, JSON), figures/ (PNG), maps/ (interactive map)
 docs/          phase 1 and phase 2 instructions (PDF + transcripts), reference thesis
 archive/       earlier Barcelona scenario, kept for reference only
-week1.txt      what was done in week 1 and why (one file per week)
+week1.txt      what was done in week 1 and why (one file per week; week2.txt = phase 1)
 report.txt     running draft of the final report```
 
 ## Conventions

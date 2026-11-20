@@ -3,3 +3,4 @@ pandas>=2.2
 numpy>=2.0
 folium>=0.17
 matplotlib>=3.9
+contextily>=1.6        # optional, only for python/12_basemap_figures.py (static maps over a basemap)

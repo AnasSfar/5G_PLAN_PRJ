@@ -124,3 +124,128 @@ REFERENCES
 [2] OpenCelliD, open database of cell towers and geolocation, https://opencellid.org.
 [3] Master thesis on Cloud-RAN planning (T. M., 2016), reference document of the project, and
     project instructions, MASTEAM Wireless and Radio Communication, EETAC-UPC, 2026.
+
+
+=====================================================================================================
+C-RAN PROJECT - WEEK 2 REPORT: PHASE 1, MINIMISE DELAY
+=====================================================================================================
+Figures: phase1/figures/fig01..fig14, interactive maps phase1/maps/map01..map05*.html (11_maps.py),
+static maps over a basemap phase1/figures/map_fig*.png (12_basemap_figures.py, needs internet).
+Tables: phase1/data/ (assignment_K19.csv, pool_categories_K19.csv, k_analysis.csv, robustness.csv).
+
+
+1. OBJECTIVE
+------------
+The Minimise Delay algorithm [3, section 3.3.3] connects every RRH to the closest BBU pool, provided
+the round-trip fronthaul delay stays below the limit, here 200 us. For each RRH we give the list of
+pools it can reach and the best one; RRHs that cannot reach any pool are unserved. Pool capacity is not
+limited. The results serve to choose the number and position of the pools and are the delay-only
+baseline for the load balancing of phase 2.
+
+
+2. SIMULATION SCENARIO
+----------------------
+RRHs. Following the review and the thesis (200 sites, 19 pools), we draw 200 of the 2,085 real core
+RRHs of week 1 at random (seed 42). A simple random sample keeps the real spatial density: most RRHs
+are in the centre and few in the periphery (fig01). The number of real RRHs is a parameter, and the
+full set is used as a check in section 6. The program can also add any number of synthetic RRHs,
+uniform in the 30 x 30 km box and at least 200 m from any other RRH; they are labelled SYNxxx and drawn
+as triangles. The reference run has none.
+
+Traffic patterns. Each RRH is residential, office or mixed. Two modes are available (fig02). In the
+random mode the shares are an input (default 50 % mixed, 30 % office, 20 % residential). In the
+geographic mode, used as reference, an RRH is office if it lies in a business district of Madrid (the
+Castellana axis, AZCA, Cuatro Torres, Distrito Telefonica, Arroyo de la Vega, IFEMA, Julian Camarillo,
+Mendez Alvaro, Ciudad Universitaria, Ciudad de la Imagen), mixed if it lies in the historic centre or
+at the airport, or if it is isolated (at most 4 real sites within 1 km, i.e. a large cell covering
+several land uses, as observed in the thesis for its outer cells), and residential otherwise. This
+gives 120 residential, 30 office and 50 mixed RRHs (60 / 15 / 25 %), against 43 / 37 / 20 % in the
+thesis [3, table 4.3], where the classes come from measured traffic.
+
+Delay model. With the propagation speed in fibre v = 2e8 m/s [3, section 4.1], the maximum distance
+for a round-trip budget is d_max = v RTT / 2 [3, eq. (3.3)], so 200 us gives 20 km. Like the thesis,
+we use straight-line distances; a route factor in the configuration can account for longer fibre.
+
+Candidate pools. Every real RRH site is a possible pool site. We select 25 candidates with the
+farthest-first k-center heuristic: the first is the RRH nearest the scenario centre, and each next one
+is the RRH farthest from those already chosen. The candidates are fixed once (P01 to P25, in selection
+order), so adding synthetic RRHs does not move them.
+
+
+3. ALGORITHMS
+-------------
+Minimise Delay [3, fig. 3.5], without capacity limits: for each RRH, compute the distance to every
+active pool; the pools within d_max are its possible pools; with none the RRH is unserved, with one it
+is connected to it, with several it is connected to the nearest.
+
+Number of pools. Starting from the 25 candidates, backward elimination removes one pool at a time,
+the one whose removal increases the mean round-trip delay the least, as long as no additional RRH
+becomes unserved. The removal order ranks the pools by relevance. For comparison we also evaluate
+the first K farthest-first candidates (the k-center solution for K pools). We keep the smallest K
+whose mean delay is within 10 % of the 25-pool value.
+
+Categories. For each pool we count the RRHs that (1) can only reach this pool, (2) have it as their
+nearest pool but could reach others, and (3) can reach it although another pool is nearer.
+
+
+4. RESULTS
+----------
+Number of pools. With 25 pools all 200 RRHs are served, with a mean round-trip delay of 18.2 us
+(standard deviation 10.2 us) and a maximum of 37.8 us. Fig06 shows how the delay grows when pools are
+removed: 19.9 us with 19 pools, 24.5 us with 12, 29.7 us with 8, 43.3 us with 4 and 71.3 us with a
+single central pool. The first pools removed are P25, P11, P10, P07, P06 and P24; with the remaining
+19 the mean delay is still within 10 % of the 25-pool value, so we select K = 19, the value of the
+thesis and of the review. The farthest-first selection gives the same values at K = 1 and K = 25 but
+is clearly worse in between (43.7 us with 8 pools), because it first places pools at the edges of the
+area, where there are few RRHs: it minimises the largest distance, not the average.
+
+Delay is not the binding constraint. Even one pool at the centre serves all 200 RRHs at 200 us
+(maximum 189 us), because only the corners of the box are more than 20 km from the centre. The
+smallest number of pools that serves every RRH is 1 at 200 us, 2 at 150 us, 6 at 100 us and 17 at
+50 us (fig07). The choice of the number of pools is therefore driven by the mean delay, by
+reliability and by load balancing rather than by the 200 us limit.
+
+Distances. With 19 pools the mean RRH-pool distance is 1.99 km and 99 % of the RRHs are within 5 km
+(fig04, fig05); 19 RRHs (9.5 %) are at distance 0 because they host a pool. The distribution is close
+to that of the Minimise Delay algorithm in the thesis [3, fig. 4.3], whose mean delay of 23.1 us
+(standard deviation 17.6 us) with 19 pools is of the same order as our 19.9 us (11.2 us).
+
+Options per RRH and per pool. At 200 us every RRH can reach 10 to 19 of the 19 pools (mean 16.8,
+fig10, fig11), so no RRH depends on a single pool and category 1 is empty (fig08). The assigned RRHs
+(category 2) are concentrated in the central pools P19 (33), P01 (32), P16 (18), P15 (16), P13 and
+P23 (14 each), while the edge pools P02 and P04 serve 2 RRHs and P03, P05 and P12 serve 3. Over the 25
+candidates (fig09), P11 and P25 would serve one RRH each, which confirms their removal. Each pool
+can be reached by 130 to 200 RRHs, which leaves a very large freedom for load balancing in phase 2.
+
+Stricter budget. With the same 19 pools and a 50 us budget (5 km), as could be required by future
+5G functions, one RRH becomes unserved (RRH1729, 6.8 km from P15; it was covered by the switched-off
+P06), 50 RRHs have only one option and the mean is 2.35 options per RRH (fig12). The exclusive RRHs
+are around the peripheral pools (P15 has 9, P18 and P21 6 each, P23 5), while the central pools P01,
+P19, P13 and P09 have none: there, pools could be moved or merged without losing coverage.
+
+
+5. ROBUSTNESS
+-------------
+Keeping the 19 pools fixed, we added 50, 100, 200 and 400 synthetic RRHs and also ran the full set of
+2,085 real RRHs (fig13, fig14). At 200 us no RRH is ever unserved. The mean delay rises from 19.9 to
+23.5, 25.7, 29.0 and 30.6 us with the synthetic RRHs, because uniformly placed sites fall in areas where
+the real network, and hence the pools, are sparse; with the full real set it is 21.7 us. At 50 us the
+number of unserved RRHs grows to 12, 20, 40 and 68, almost all synthetic, and to 33 with the full real
+set. The automatic choice gives 19 or 20 pools with synthetic RRHs and 17 with the full set. In every
+run the program checks that each served RRH uses its nearest pool within d_max, that an RRH is
+unserved only when no pool is within d_max, and that the category counts add up; all checks passed.
+
+
+6. CONCLUSIONS AND NEXT STEPS
+-----------------------------
+In a 30 x 30 km area a 200 us round-trip budget (20 km of fibre) is not restrictive: a single central
+pool would serve every RRH. We select 19 of 25 candidate pools, which keeps the mean delay at 19.9 us
+(10 % above the 25-pool value), and every RRH can reach on average 16.8 pools. Delay becomes a real
+constraint only for budgets of about 50 us, where the peripheral pools become essential. The limits
+are the straight-line distances, the random sample of 200 sites and the approximate geographic rule
+for the traffic patterns. In phase 2 we will balance the load with the 19-pool assignment as the
+delay-only baseline and compare it with too few (8) and too many (25) pools; the 5G link budget in
+Excel is still to be done.
+
+[3] T. Monteiro, "Implementation Analysis of Cloud Radio Access Network Architectures in Small Cells",
+    MSc thesis, Instituto Superior Tecnico, Lisbon, 2016 (reference document of the project).

@@ -58,3 +58,75 @@ def tile_bbox(r: int, c: int):
     dlon = 2 * HALF_LON / N_TILES
     dlat = 2 * HALF_LAT / N_TILES
     return (w0 + c * dlon, s0 + r * dlat, w0 + (c + 1) * dlon, s0 + (r + 1) * dlat)
+
+
+# =====================================================================================================
+# PHASE 1 - MINIMISE DELAY (thesis section 3.3.3, professor's review "Project review phase 1 min delay")
+# Every phase-1 parameter lives here; 07_scenario.py, 08_min_delay.py and 09_figures.py only read them.
+# =====================================================================================================
+PHASE1 = ROOT / "phase1"                      # all phase-1 outputs
+P1_DATA = PHASE1 / "data"                     # CSV / JSON tables
+P1_FIG = PHASE1 / "figures"                   # PNG figures
+P1_MAPS = PHASE1 / "maps"                     # interactive Folium maps
+for d in (PHASE1, P1_DATA, P1_FIG, P1_MAPS):
+    d.mkdir(parents=True, exist_ok=True)
+
+# ---------- RRHs ----------
+N_RRH_REAL = 200            # real (Infoantenas, core) RRHs drawn for the reference scenario; None = all 2,085
+RRH_SAMPLE_SEED = 42        # simple random sample: keeps the real density (dense centre, sparse edges)
+N_SYNTHETIC = 0             # extra synthetic RRHs, uniform at random in the 30 x 30 km box (input variable)
+SYNTH_MIN_DIST_M = 200.0    # a synthetic RRH is placed at least this far from any other RRH
+SYNTH_SEED = 7
+
+# ---------- traffic pattern of each RRH ----------
+TRAFFIC_MODE = "geo"        # "random" (shares below) or "geo" (realistic, from the map of Madrid)
+TRAFFIC_SHARES = {"mixed": 0.50, "office": 0.30, "residential": 0.20}   # used by "random" (input variable)
+TRAFFIC_SEED = 11
+TRAFFIC_COLORS = {"residential": "#2a78d6", "office": "#eb6834", "mixed": "#1baf7a"}   # validated palette slots 1-3
+# "geo" rule, in order of precedence: inside an office district -> office; inside a mixed-use zone -> mixed;
+# low local site density (outskirts, large cells covering several land uses, as in thesis fig. 4.2) -> mixed;
+# otherwise -> residential. A zone is a circle (name, lat, lon, radius km) or a corridor around a segment
+# (name, lat1, lon1, lat2, lon2, half-width km). Positions are approximate; check them on the map.
+OFFICE_ZONES = [
+    ("Paseo de la Castellana axis (Colon - Plaza de Castilla)", 40.4253, -3.6903, 40.4665, -3.6889, 0.6),
+    ("AZCA / Nuevos Ministerios",               40.4495, -3.6925, 1.0),
+    ("Cuatro Torres Business Area",             40.4770, -3.6880, 0.7),
+    ("Distrito Telefonica (Las Tablas)",        40.5155, -3.6635, 0.8),
+    ("Arroyo de la Vega business park",         40.5310, -3.6430, 1.0),
+    ("Campo de las Naciones / IFEMA",           40.4640, -3.6180, 1.0),
+    ("Julian Camarillo business area",          40.4370, -3.6260, 0.7),
+    ("Mendez Alvaro offices",                   40.3960, -3.6780, 0.6),
+    ("Ciudad Universitaria",                    40.4470, -3.7280, 1.2),
+    ("Ciudad de la Imagen (Pozuelo)",           40.3960, -3.7780, 0.8),
+]
+MIXED_ZONES = [
+    ("Historic centre (Sol, Gran Via)",         40.4170, -3.7035, 1.8),
+    ("Madrid-Barajas airport",                  40.4800, -3.5750, 2.5),
+]
+DENSITY_RADIUS_KM = 1.0     # local density = real core RRHs within this radius (full 2,085 dataset)
+LOW_DENSITY_MAX = 4         # at most this many neighbours -> outskirts -> mixed
+
+# ---------- fronthaul delay ----------
+MAX_RTT_US = 200.0          # maximum round-trip (two-way) fronthaul delay, review: 200 us
+FIBRE_KM_PER_MS = 200.0     # propagation speed in fibre, 2e8 m/s (thesis section 4.1)
+ROUTE_FACTOR = 1.0          # fibre length / straight-line distance; 1.0 = straight line as in the thesis
+RTT_SWEEP_US = [200.0, 150.0, 100.0, 50.0]   # sensitivity: 150 us = thesis reference, 50 us ~ "5x stricter for 5G"
+
+
+def d_max_km(rtt_us: float = MAX_RTT_US) -> float:
+    """Maximum RRH-pool straight-line distance for a round-trip budget, eq. (3.3): d = v * RTT / 2."""
+    return FIBRE_KM_PER_MS * (rtt_us / 1000.0) / 2.0 / ROUTE_FACTOR
+
+
+def rtt_us(dist_km):
+    """Round-trip fronthaul delay (us) of a straight-line distance (km), inverse of d_max_km."""
+    return 2.0 * dist_km * ROUTE_FACTOR / FIBRE_KM_PER_MS * 1000.0
+
+
+# ---------- BBU pools ----------
+N_POOL_CANDIDATES = 25      # possible pool sites, fixed once (review: start large, e.g. 25, then reduce)
+POOL_MIN_DIST_KM = 2.0      # two candidate pools are never closer than this
+# Selection of the active pools: "auto" = smallest K whose mean RTT is within KNEE_TOL of the 25-pool value
+# (backward elimination from 25), or an integer to force K.
+K_ACTIVE = "auto"
+KNEE_TOL = 0.10
