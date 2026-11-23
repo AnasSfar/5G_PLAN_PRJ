@@ -130,3 +130,52 @@ POOL_MIN_DIST_KM = 2.0      # two candidate pools are never closer than this
 # (backward elimination from 25), or an integer to force K.
 K_ACTIVE = "auto"
 KNEE_TOL = 0.10
+
+
+# =====================================================================================================
+# PHASE 2 - LOAD BALANCING (thesis sections 3.2.4 and 3.3.4, review "Project review phase 2")
+# Every phase-2 parameter lives here; 13_traffic.py, 14_balancing.py and 15_figures.py only read them.
+# Input: the phase-1 scenario (phase1/data/scenario.json) and its backward-elimination order.
+# =====================================================================================================
+PHASE2 = ROOT / "phase2"
+P2_DATA = PHASE2 / "data"
+P2_FIG = PHASE2 / "figures"
+for d in (PHASE2, P2_DATA, P2_FIG):
+    d.mkdir(parents=True, exist_ok=True)
+
+# ---------- 24 h traffic profiles ----------
+# Normalised profiles of thesis fig. E.1 (digitised; same values as the "anas" branch). Index h = 1..24,
+# value of the hour ending at h:00 (h = 15 -> 15:00). 1.0 = busiest hour of that profile.
+PROFILES = {
+    "residential": [0.90, 0.645, 0.59, 0.52, 0.32, 0.165, 0.145, 0.225, 0.175, 0.215, 0.26, 0.265,
+                    0.30, 0.34, 0.435, 0.42, 0.60, 0.795, 0.805, 0.465, 0.79, 1.00, 0.93, 0.86],
+    "office":      [0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.32, 0.19, 0.245, 0.53, 0.975,
+                    0.40, 0.945, 0.79, 1.00, 0.55, 0.12, 0.035, 0.075, 0.005, 0.005, 0.005, 0.005],
+    "mixed":       [0.36, 0.36, 0.275, 0.11, 0.065, 0.13, 0.165, 0.335, 0.49, 0.52, 0.59, 0.65,
+                    0.70, 0.72, 0.92, 0.94, 0.87, 1.00, 0.85, 0.78, 0.595, 0.76, 0.885, 0.76],
+}
+HOURS = list(range(1, 25))
+REPORT_HOURS = [8, 15, 21]                # review 1a: load per pool at 8:00, 15:00 and 21:00
+
+# ---------- busy-hour traffic of one RRH ----------
+# No per-site traffic is public, so the busy-hour traffic comes from the technologies of each merged site
+# (week 1): per operator station, 4G = 3 sectors x 20 MHz x 1.5 b/s/Hz = 90 Mbps at 50 % load -> 45 Mbps;
+# 5G n78 = 3 sectors x 100 MHz x 5 b/s/Hz = 1.5 Gbps at 10 % load -> 150 Mbps. A site that merges n towers
+# carries n stations. Synthetic RRHs get one 4G+5G station.
+PEAK_4G_MBPS = 45.0
+PEAK_5G_MBPS = 150.0
+MBPS_TO_GBPH = 3600.0 / 8.0 / 1000.0      # 1 Mbps sustained for one hour = 0.45 GB per hour (GBph)
+
+# ---------- load balancing ----------
+BALANCE_HOUR = "auto"                     # "auto" = hour where the sum of the three profiles is maximum
+                                          # (review a), or an hour 1..24 (e.g. 15)
+K_CASES = {"normal": 19, "few": 8, "many": 25}   # active pools; sets come from the phase-1 removal order
+K_REFERENCE = "normal"
+# Second-iteration order of algorithm A (traffic): fewest possible pools first, then highest traffic at the
+# balancing hour, then shortest distance to the nearest possible pool. The RRH goes to the possible pool
+# with the lowest load; ties -> nearest pool. Algorithm B (number of RRHs): fewest possible pools first,
+# then shortest distance; the RRH goes to the possible pool with the fewest RRHs; ties -> nearest.
+SLACK_SWEEP_KM = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20]   # distance-aware variant (extra analysis)
+ALGO_COLORS = {"delay": "#6b6259", "traffic": "#c2410c", "count": "#7b4bb3"}
+ALGO_LABELS = {"delay": "Only distance (minimise delay)", "traffic": "Load balancing, traffic",
+               "count": "Load balancing, number of RRHs"}

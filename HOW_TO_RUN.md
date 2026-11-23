@@ -38,6 +38,21 @@ python 12_basemap_figures.py                    # light grey basemap
 python 12_basemap_figures.py --basemap osm      # or: satellite
 ```
 
+## 2b. Phase 2 simulations (load balancing, no internet needed)
+
+Run after the phase-1 steps 07 and 08 (it reads `phase1/data/scenario.json` and `k_analysis.csv`):
+
+```bash
+cd python
+python 13_traffic.py       # 24 h profiles, traffic of every RRH, network load, balancing hour
+python 14_balancing.py     # only distance vs traffic balancing vs RRH balancing, K = 19 / 8 / 25
+python 15_p2_figures.py    # figures fig01..fig14
+```
+
+Results go to `phase2/data/` (CSV and `summary.json`) and `phase2/figures/`. Parameters are in the
+phase-2 block at the end of `python/config.py` (`BALANCE_HOUR`, `K_CASES`, `PEAK_4G_MBPS`, `PEAK_5G_MBPS`,
+`PROFILES`). See `week3.txt` for the decisions and the results.
+
 ## 3. Changing the scenario
 
 Every parameter is in the phase-1 block at the end of `python/config.py`. Edit it, then run steps 07 to 11 again.
