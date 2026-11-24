@@ -20,7 +20,7 @@ def load_scenario():
 
 
 def balance_hour():
-    """Hour where the sum of the three normalised profiles is maximum (review a), unless fixed in config."""
+    """Peak hour: hour where the sum of the three normalised profiles is maximum (review a), unless fixed."""
     if cfg.BALANCE_HOUR != "auto":
         return int(cfg.BALANCE_HOUR)
     s = sum(np.array(v) for v in cfg.PROFILES.values())
@@ -28,8 +28,8 @@ def balance_hour():
 
 
 # ----------------------------------------------------------------------------- traffic
-def peak_gbph(rrhs):
-    """Busy-hour traffic of each RRH in GBph, from the technologies and the number of merged stations."""
+def peak_mbph(rrhs):
+    """Busy-hour traffic of each RRH in MBph, from the technologies and the number of merged stations."""
     master = {r["rrh_id"]: r for r in json.loads((cfg.JSON_DIR / "rrh_master.json").read_text(encoding="utf-8"))["rrhs"]}
     out = []
     for r in rrhs:
@@ -38,12 +38,12 @@ def peak_gbph(rrhs):
             n, g4, g5 = 1, True, True
         else:
             n, g4, g5 = m["n_towers_merged"], m["has_4g"], m["has_5g"]
-        out.append(n * (cfg.PEAK_4G_MBPS * g4 + cfg.PEAK_5G_MBPS * g5) * cfg.MBPS_TO_GBPH)
+        out.append(n * (cfg.PEAK_4G_MBPS * g4 + cfg.PEAK_5G_MBPS * g5) * cfg.MBPS_TO_MBPH)
     return np.array(out)
 
 
 def traffic_matrix(peak, patterns, force=None):
-    """RRH x 24 h traffic in GBph. force = "residential" / "office" gives every RRH that profile."""
+    """RRH x 24 h traffic in MBph. force = "residential" / "office" gives every RRH that profile."""
     prof = {k: np.array(v) for k, v in cfg.PROFILES.items()}
     return np.vstack([p * prof[force or c] for p, c in zip(peak, patterns)])
 
@@ -63,18 +63,16 @@ def delay_only(D, ok):
     return a
 
 
-def balance(D, ok, w, by="traffic", slack_km=None):
+def balance(D, ok, w, by="traffic"):
     """Load balancing of the phase-2 review.
 
     b. first iteration: RRHs with a single possible pool go to it; the pool load is updated.
     c./e. second iteration, order of the remaining RRHs:
           by="traffic": fewest possible pools, then highest traffic w, then nearest possible pool;
           by="count":   fewest possible pools, then nearest possible pool.
-    d./f. each RRH goes to its possible pool with the lowest load (traffic in GBph, or number of RRHs);
+    d./f. each RRH goes to its possible pool with the lowest load (traffic in MBph, or number of RRHs);
           ties -> the nearest pool. The load is updated after every assignment.
-    w: traffic of every RRH at the balancing hour (ignored for by="count"). Returns pool index, -1 = unserved.
-    slack_km: optional distance-aware variant (not in the review): an RRH may only use the possible pools at
-    most slack_km farther than its nearest possible pool. None = every possible pool (review algorithm).
+    w: traffic of every RRH at the peak hour (ignored for by="count"). Returns pool index, -1 = unserved.
     """
     n, m = ok.shape
     a = np.full(n, -1)
@@ -92,8 +90,6 @@ def balance(D, ok, w, by="traffic", slack_km=None):
     scale = weight.max() if weight.max() > 0 else 1.0               # loads compared on a relative scale, so
     for i in order:                                                # that ties do not depend on the units
         cand = np.flatnonzero(ok[i])
-        if slack_km is not None:
-            cand = cand[D[i, cand] <= d_near[i] + slack_km + 1e-9]
         j = int(cand[np.lexsort((D[i, cand], np.round(load[cand] / scale, 9)))[0]])
         a[i] = j; load[j] += weight[i]
     return a
@@ -101,7 +97,7 @@ def balance(D, ok, w, by="traffic", slack_km=None):
 
 # ----------------------------------------------------------------------------- metrics
 def pool_load(a, T, m):
-    """Load of every pool for every hour (pools x 24), GBph."""
+    """Load of every pool for every hour (pools x 24), MBph."""
     out = np.zeros((m, T.shape[1]))
     for j in range(m):
         out[j] = T[a == j].sum(axis=0)
@@ -116,11 +112,3 @@ def cv(v):
     v = np.asarray(v, float)
     return float(v.std() / v.mean()) if v.mean() else 0.0
 
-
-def mux_gain(a, T, m):
-    """Multiplexing gain per pool, thesis eq. (3.20): sum of RRH peaks / peak of the pool, and overall (3.21)."""
-    peaks = T.max(axis=1)
-    PL = pool_load(a, T, m)
-    g = np.array([peaks[a == j].sum() / PL[j].max() if PL[j].max() > 0 else np.nan for j in range(m)])
-    overall = peaks[a >= 0].sum() / PL.max(axis=1).sum()
-    return g, float(overall)

@@ -2,22 +2,22 @@ WEEK 3 - PHASE 2: LOAD BALANCING
 ================================
 Goal (professor's review "Project review phase 2 - RRH balancing and load balancing", thesis sections
 3.2.4 and 3.3.4): starting from the Minimise Delay assignment of phase 1, balance the pools so the network
-is more resilient to faults: (A) by traffic (GBph, virtualised scenario, no pool capacity limit) and
+is more resilient to faults: (A) by traffic (MBph, virtualised scenario, no pool capacity limit) and
 (B) by number of RRHs; compare with the delay-only assignment, for normal / few / many pools.
 
 
 1. NEW FILES
 ------------
-  python/config.py         phase-2 block added at the end: profiles, traffic model, balancing hour, K cases
+  python/config.py         phase-2 block added at the end: profiles, traffic model, peak hour, K cases
   python/p2_lib.py         shared functions: phase-1 inputs, traffic matrix, delay-only and balancing
-                           algorithms, pool load, multiplexing gain
+                           algorithms, pool load
   python/p2_style.py       figure style (same look as phase 1)
   python/13_traffic.py     traffic of every RRH for 24 h -> phase2/data/rrh_traffic.csv, traffic.json,
-                           fig01 (profiles, balancing hour), fig02 (network load, review 1c)
-  python/14_balancing.py   the three assignments for K = 19 / 8 / 25 and the extra analyses
-                           -> assignment_<case>.csv, pools_<case>.csv, hour_dependence.csv,
-                           single_profile.csv, slack_sweep.csv, summary.json
-  python/15_p2_figures.py  figures fig03..fig14 -> phase2/figures/
+                           fig01 (profiles, peak hour), fig02 (network load, review 1c)
+  python/14_balancing.py   the three assignments for K = 19 / 8 / 25, hour dependence, all residential /
+                           all office -> assignment_<case>.csv, pools_<case>.csv, hour_dependence.csv,
+                           single_profile.csv, summary.json
+  python/15_p2_figures.py  figures fig03..fig10 -> phase2/figures/
 Run from python/ after the phase-1 chain (07, 08):
   python 13_traffic.py && python 14_balancing.py && python 15_p2_figures.py      (about 5 s)
 
@@ -31,38 +31,38 @@ Run from python/ after the phase-1 chain (07, 08):
 - 24 h profiles: thesis fig. E.1, digitised (same values as Anas's branch). Index h = hour ending at h:00.
 - Busy-hour traffic of an RRH (no per-site traffic is public): per merged station 45 Mbps if 4G
   (3 sectors x 20 MHz x 1.5 b/s/Hz, 50 % load) + 150 Mbps if 5G (3 x 100 MHz x 5 b/s/Hz, 10 % load),
-  times the number of stations merged at the site (week 1). Converted to GBph (1 Mbps for 1 h = 0.45 GB),
-  the unit of the thesis. Result: 20 to 527 GBph per RRH, mean 137 GBph.
+  times the number of stations merged at the site (week 1). Converted to MBph, the review unit
+  (1 Mbps for 1 h = 450 MB). Result: 20,250 to 526,500 MBph per RRH, mean 137,160 MBph.
   GOPS were not used: with no pool capacity limit the number of cards is proportional to the traffic.
-- Balancing hour: 16:00 = maximum of the sum of the three profiles (review a). The network as a whole
-  peaks at 22:00 because 60 % of the RRHs are residential.
+- Peak hour: 16:00 = maximum of the sum of the three profiles (review a). The traffic balancing is done
+  at 16:00 and that assignment is the adopted one (review 2b). (The network total is highest at 22:00
+  because 60 % of the RRHs are residential.)
 - Algorithm A (traffic, review b-d): 1st iteration: RRHs with one possible pool (none at 200 us);
-  2nd iteration, order: fewest possible pools, then highest traffic at 16:00, then nearest possible pool;
-  each RRH goes to its possible pool with the lowest load; ties -> nearest. Load updated after each RRH.
+  2nd iteration, order: fewest possible pools, then highest traffic at 16:00, then nearest possible pool
+  (review c: number of possible connections, traffic, distance); each RRH goes to its possible pool with
+  the lowest load (BBU pool traffic); ties -> nearest. Load updated after each RRH.
 - Algorithm B (number of RRHs, review e-f): same first iteration; order: fewest possible pools, then nearest
   possible pool; each RRH goes to the possible pool with the fewest RRHs; ties -> nearest.
 - Hour dependence (review 2b): algorithm A repeated at each of the 24 hours and compared with the 16:00
   result, which is the one adopted.
 - All residential / all office (review 1b, 2c): every RRH given the same profile, same peak traffic.
-- Extra: a distance-aware variant of A (a pool is allowed only if it is at most s km farther than the
-  RRH's nearest possible pool) to show the balance / distance trade-off. Not part of the review algorithm.
 
 
 3. RESULTS (reference K = 19, balancing at 16:00)
 -------------------------------------------------
                           only distance    A: traffic     B: number of RRHs
   load CV at 16:00        1.11             0.04           0.26
-  pool load at 16:00      62 - 3941 GBph   875 - 986      390 - 1201
+  pool load at 16:00      62,370 -         875,340 -      389,610 -
+  [MBph]                  3,940,920        986,310        1,201,095
   RRHs per pool           2 - 33           7 - 15         10 - 11
   mean / max distance     2.0 / 6.8 km     10.3 / 20.0    7.5 / 19.4
   mean RTT                19.9 us          102.5 us       75.2 us
   RRHs moved              -                182 of 200     157 of 200
   24 h average cap. CV    0.90             0.19           0.27
-  multiplexing gain       1.14             1.20           1.20
-- Before balancing the two central pools P19 and P01 carry 3.9 and 3.3 TBph at 16:00, while P12 carries
-  62 GBph (review 1a: CV 1.00 at 8:00, 1.07 at 15:00, 0.84 at 21:00).
-- Network load (review 1c): minimum 3.6 TBph at 7:00, 17.0 TBph at 16:00, maximum 22.1 TBph at 22:00.
-  Sum of the RRH peaks 27.4 TBph -> network multiplexing gain 1.24.
+- Before balancing the two central pools P19 and P01 carry 3,940,920 and 3,246,750 MBph at 16:00, while
+  P12 carries 62,370 MBph (review 1a: CV 1.00 at 8:00, 1.07 at 15:00, 0.84 at 21:00).
+- Network load (review 1c): minimum 3,558,735 MBph at 7:00, 16,980,300 MBph at 16:00, maximum
+  22,094,572 MBph at 22:00.
 - All residential / all office: one profile multiplies every RRH by the same factor, so the balancing at
   any hour gives exactly the same assignment for both (CV 0.94 before, 0.00 after). The real mix is harder
   to balance (1.11 -> 0.04) because office and residential RRHs peak at different hours.
@@ -71,15 +71,12 @@ Run from python/ after the phase-1 chain (07, 08):
 - Price of balancing: every pool is reachable from almost every RRH (20 km reach, 30 km box), so the
   balancing sends RRHs across the city: 51 % of the links are longer than 10 km with A, 30 % with B
   (0 % with delay only). Still inside 200 us, but 5x the delay-only mean.
-- Distance-aware variant: allowing at most 5 km over the nearest pool gives CV 0.58 with a 4.4 km mean;
-  10 km gives CV 0.28 with 7.9 km; 15 km reaches the full balance (0.04).
-- K comparison: few (8) pools are the easiest to balance (A: CV 0.00, 21 - 30 RRHs per pool) and keep the
-  highest multiplexing gain (1.24); many (25) pools are the hardest (A: CV 0.10, B: 0.40) because some
-  pools then have only 4 - 8 RRHs. Mean distance after balancing is 9 - 10 km in every case.
+- K comparison: few (8) pools are the easiest to balance (A: CV 0.00, 21 - 30 RRHs per pool); many (25)
+  pools are the hardest (A: CV 0.10, B: 0.40) because some pools then have only 4 - 8 RRHs. Mean distance
+  after balancing is 9 - 10 km in every case.
 
 
 4. OPEN POINTS
 --------------
 - Traffic is modelled from technologies, not measured; the land-use zones are approximate.
-- Decide whether the report adopts the pure review algorithm or the distance-aware variant (s = 5 or 10 km).
 - 5G link budget in Excel: not started.

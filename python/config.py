@@ -164,18 +164,18 @@ REPORT_HOURS = [8, 15, 21]                # review 1a: load per pool at 8:00, 15
 # carries n stations. Synthetic RRHs get one 4G+5G station.
 PEAK_4G_MBPS = 45.0
 PEAK_5G_MBPS = 150.0
-MBPS_TO_GBPH = 3600.0 / 8.0 / 1000.0      # 1 Mbps sustained for one hour = 0.45 GB per hour (GBph)
+MBPS_TO_MBPH = 3600.0 / 8.0               # 1 Mbps sustained for one hour = 450 MB per hour (MBph), review unit
 
 # ---------- load balancing ----------
-BALANCE_HOUR = "auto"                     # "auto" = hour where the sum of the three profiles is maximum
-                                          # (review a), or an hour 1..24 (e.g. 15)
+BALANCE_HOUR = "auto"                     # peak hour. "auto" = hour where the sum of the three profiles is
+                                          # maximum (review a): 16:00 with these profiles. Or an hour 1..24
 K_CASES = {"normal": 19, "few": 8, "many": 25}   # active pools; sets come from the phase-1 removal order
 K_REFERENCE = "normal"
-# Second-iteration order of algorithm A (traffic): fewest possible pools first, then highest traffic at the
-# balancing hour, then shortest distance to the nearest possible pool. The RRH goes to the possible pool
-# with the lowest load; ties -> nearest pool. Algorithm B (number of RRHs): fewest possible pools first,
-# then shortest distance; the RRH goes to the possible pool with the fewest RRHs; ties -> nearest.
-SLACK_SWEEP_KM = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20]   # distance-aware variant (extra analysis)
+# Second-iteration order of algorithm A (traffic, review c): fewest possible pools first, then highest traffic
+# at the peak hour, then shortest distance to the nearest possible pool. The RRH goes to the possible pool
+# with the lowest traffic load (BBU pool traffic); ties -> nearest pool. Algorithm B (number of RRHs,
+# review e-f): fewest possible pools first, then shortest distance; the RRH goes to the possible pool with
+# the fewest RRHs; ties -> nearest.
 ALGO_COLORS = {"delay": "#6b6259", "traffic": "#c2410c", "count": "#7b4bb3"}
 ALGO_LABELS = {"delay": "Only distance (minimise delay)", "traffic": "Load balancing, traffic",
                "count": "Load balancing, number of RRHs"}

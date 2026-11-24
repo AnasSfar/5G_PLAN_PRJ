@@ -15,3 +15,10 @@ plt.rcParams.update({"font.size": 9, "axes.edgecolor": INK2, "axes.labelcolor": 
 
 def save(fig, name):
     fig.tight_layout(); fig.savefig(cfg.P2_FIG / name); plt.close(fig)
+
+
+def mbph_axis(ax, axis="y"):
+    """Thousands separators on a load axis in MBph (e.g. 4,000,000)."""
+    from matplotlib.ticker import FuncFormatter
+    fmt = FuncFormatter(lambda v, _: f"{v:,.0f}")
+    (ax.yaxis if axis == "y" else ax.xaxis).set_major_formatter(fmt)

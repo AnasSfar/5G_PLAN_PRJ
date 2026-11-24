@@ -44,9 +44,9 @@ Run after the phase-1 steps 07 and 08 (it reads `phase1/data/scenario.json` and 
 
 ```bash
 cd python
-python 13_traffic.py       # 24 h profiles, traffic of every RRH, network load, balancing hour
+python 13_traffic.py       # 24 h profiles, traffic of every RRH, network load, peak hour
 python 14_balancing.py     # only distance vs traffic balancing vs RRH balancing, K = 19 / 8 / 25
-python 15_p2_figures.py    # figures fig01..fig14
+python 15_p2_figures.py    # figures fig03..fig10 (fig01, fig02 come from 13_traffic.py)
 ```
 
 Results go to `phase2/data/` (CSV and `summary.json`) and `phase2/figures/`. Parameters are in the
