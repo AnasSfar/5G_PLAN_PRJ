@@ -35,6 +35,26 @@ Differences with the LTE example: NR resource block = 12 subcarriers x 30 kHz (m
   Penetration          0 dB (outdoor user)
 
 
+2b. WHY THESE CHOICES
+---------------------
+- n78: our week-1 5G sites are the sites declaring 3.5 GHz (26 GHz is very rare), and n78 is the
+  capacity band that matters for a C-RAN in a dense city. Also the hardest case (more path loss).
+- 30 kHz / 100 MHz: usual numerology for mid-band TDD; 15 kHz does not allow 100 MHz, 60 kHz has a
+  shorter cyclic prefix. 100 MHz = the full carrier an operator uses in n78.
+- UMa NLOS: Infoantenas sites are rooftop / mast macro sites, not lamp-post small cells (UMi), and RMa
+  only fits the outskirts. The LOS formula gives 102 dB instead of 134 dB at 653 m and a 4.2 km uplink
+  range: not believable among 6-8 floor buildings. Same model as 5g-tools, so we can compare.
+- 53 / 23 dBm: common n78 radio power and phone power class 3. No beamforming gain added (kept the
+  5g-tools 17 dBi): slightly pessimistic; +7 dB would give R = 986 m instead of 653 m.
+- 20 RBs in UL: with 273 RBs the phone would have -1.4 dBm per RB and almost no range; the scheduler
+  gives edge users few RBs. 20 RBs (7.2 MHz) still gives a few Mbps.
+- SINR -6 dB and margins 7 / 2 / 1 dB from 5g-tools: no measured data of our own, and it lets us check
+  the sheet against the web page. -6 dB = most robust MCS, so R is the edge of coverage; with 0 dB the
+  uplink range drops to 458 m.
+- Outdoor user as baseline (same as 5g-tools, largest cell); indoor is the main limit (most traffic in
+  Madrid is indoor). NF: phone 7 dB, gNB 5 dB (cheaper electronics in the phone).
+
+
 3. RESULTS
 ----------
                        DL            UL
@@ -47,6 +67,8 @@ Differences with the LTE example: NR resource block = 12 subcarriers x 30 kHz (m
 - Covering the 900 km2 of the scenario with 3-sector sites (area 1.95 R^2) needs about 1,084 sites, the
   same order as the 1,134 real sites with 5G found in week 1. For indoor users (about 15 dB more loss) the
   radius drops a lot, so indoor coverage relies on the lower bands.
+- The close match is partly luck: with +7 dB beamforming the count is about 475 sites, with SINR 0 dB about
+  2,200. It only shows the right order of magnitude.
 - Check: with the inputs of the 5g-tools NR example (3500 MHz, 1000 m, 1 RB, 23 dBm per RB) the sheet gives
   the same values as the web page: path loss 141.67 dB, sensitivity -117.44 dBm, margin +3.77 dB.
 
