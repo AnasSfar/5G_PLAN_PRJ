@@ -53,6 +53,11 @@ Results go to `phase2/data/` (CSV and `summary.json`) and `phase2/figures/`. Par
 phase-2 block at the end of `python/config.py` (`BALANCE_HOUR`, `K_CASES`, `PEAK_4G_MBPS`, `PEAK_5G_MBPS`,
 `PROFILES`). See `week3.txt` for the decisions and the results.
 
+## 2c. Phase 3: 5G link budget
+
+Open `phase3/5G_link_budget.xlsx` in Excel: no Python needed. Edit the blue cells on a yellow
+background; margin, maximum range and cell radius update by themselves. Values and results: `week4.txt`.
+
 ## 3. Changing the scenario
 
 Every parameter is in the phase-1 block at the end of `python/config.py`. Edit it, then run steps 07 to 11 again.

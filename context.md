@@ -9,6 +9,7 @@ when a decision changes or a week is finished.
 - **Professor:** Sílvia Ruiz.
 - **Assignment, phase 1 (scenario + delay-based pool placement):** `docs/C-RAN work_instructions_v2.pdf` (text version in `docs/work_instructions_transcript.md`).
 - **Assignment, phase 2 (load balancing):** `docs/Project review_phase2_RRH_balancing_and_load_balancing.pdf` (text version in `docs/phase2_transcript.md`).
+- **Assignment, phase 3 (5G link budget in Excel, due 30 November 2026):** `phase3/5G_link_budget.pdf`. Build an Excel 5G link budget based on the example calculator https://5g-tools.com/4g-LTE-link-budget-calculator/, and understand and explain every parameter in the calculation.
 - **Reference to reproduce:** `docs/Thesis_TiagoM_v20161114_vLC.pdf`, Tiago Monteiro's master thesis on C-RAN in small cells.
 - **Team:** 3 students. Any programming language is allowed; we use Python.
 
@@ -22,7 +23,7 @@ Every RRH site is a candidate pool site. Pools are picked with a heuristic such 
 k-center, for several values of K, and the results are compared. The program must also be able to
 inject synthetic RRHs (their number is a variable), clearly labelled, to test higher densities.
 
-Extra deliverable: a **5G link budget in Excel**.
+Extra deliverable (phase 3): a **5G link budget in Excel**.
 
 ## Assessment (no final exam)
 
@@ -78,57 +79,67 @@ parameters in the phase-1 block of `python/config.py`; outputs in `phase1/`. Ful
   ("only this pool") is empty at 200 us; at 50 us 50 RRHs have one option and 1 is unserved.
 - **Baseline for phase 2:** `phase1/data/assignment_K19.csv`. Suggested K cases: 8 / 19 / 25.
 
-## Phase 2: load balancing (professor's review, not started)
+## Phase 2: load balancing (week 3, done)
 
-Use the BBU pools to spread the RRHs evenly so the network is more resilient to faults.
-- **Virtualised scenario:** the load is counted in Mbps or GOPS, which gives the number of processing cards per pool.
-- **No limit on pool capacity:** there is no maximum number of cards per pool. The goal is to *balance* the load, not to minimise the number of cards.
-- **Traffic profiles:** every RRH gets a profile (residential, office or mixed). Give the 24 h curve of each profile as a figure.
-- **Analysis hour:** choose 8:00, 15:00 (peak) or 21:00. A good choice is the hour where the sum of the three profiles is highest, usually around noon.
+Instructions: professor's review "Project review phase 2 - RRH balancing and load balancing" (thesis
+sections 3.2.4 and 3.3.4). Virtualised scenario, no pool capacity limit: the goal is to *balance* the
+load, not to minimise cards. Code: `python/13_traffic.py`, `14_balancing.py`, `15_p2_figures.py` +
+`p2_lib.py`, `p2_style.py`; parameters in the phase-2 block of `python/config.py`; outputs in `phase2/`.
+Full reasoning: `week3.txt`. Report: `reports/week3_report_phase2.docx`.
 
-**Algorithm A: balancing by traffic load**
-1. Choose the hour.
-2. First iteration: assign the RRHs that can reach only one pool (within the delay limit), then compute each pool's load.
-3. Second iteration: order the remaining RRHs carefully, or the solution may not be physically possible. Take into account the number of possible pools, the distance to each and the current pool traffic.
-4. After each assignment, update that pool's load. Continue until every RRH is assigned.
+- **Scenario:** the phase-1 reference (200 RRHs, geo traffic 120 residential / 30 office / 50 mixed,
+  RTT <= 200 us). K cases: normal 19, few 8, many 25 (pool sets from the phase-1 backward elimination).
+- **Profiles:** thesis fig. E.1 digitised (`PROFILES`), index h = hour ending at h:00.
+- **Traffic per RRH:** per merged station 45 Mbps if 4G (3 x 20 MHz x 1.5 b/s/Hz, 50 % load) + 150 Mbps
+  if 5G (3 x 100 MHz x 5 b/s/Hz, 10 % load), x stations at the site, converted to MBph (1 Mbps for 1 h =
+  450 MB). 20,250 to 526,500 MBph per RRH. GOPS not used.
+- **Balancing hour:** 16:00, max of the sum of the three profiles (`BALANCE_HOUR = "auto"`); this
+  assignment is the adopted one. The network total peaks at 22:00 (60 % residential).
+- **Algorithm A (traffic):** 1st iteration = single-option RRHs (none at 200 us); then order by fewest
+  possible pools, highest traffic at 16:00, nearest pool; each RRH -> possible pool with lowest load, ties -> nearest.
+- **Algorithm B (number of RRHs):** same 1st iteration; order by fewest possible pools, then nearest;
+  each RRH -> possible pool with fewest RRHs, ties -> nearest.
+- **Numbers (K = 19, 16:00):** load CV 1.11 (delay only) -> 0.04 (A) / 0.26 (B); RRHs per pool 2-33 ->
+  7-15 / 10-11; mean distance 2.0 -> 10.3 / 7.5 km (mean RTT 19.9 -> 102.5 / 75.2 us); 182 / 157 of 200 RRHs
+  move. Price of balancing: every pool is reachable from almost every RRH, so RRHs cross the city
+  (51 % of links > 10 km with A). All residential / all office give the same assignment (CV 0.00 after).
+  Balancing at another hour moves 124-174 RRHs; with the 16:00 assignment the CV stays 0.04-0.37 all day.
+  Few pools (8) are easiest to balance (A: CV 0.00), many (25) hardest (A: 0.10, B: 0.40).
+- **All review outputs produced:** fig01-fig10 in `phase2/figures/` (profiles, network load, load per
+  pool at 8/15/21 h, single-profile bars, RRHs per pool, hour dependence, distance bands, average
+  capacity, K comparison).
 
-**Algorithm B: balancing by number of RRHs (for comparison)**
-1. Same first iteration as A (RRHs with a single possible pool).
-2. Sort the remaining RRHs by their number of possible pools, in ascending order.
-3. Assign each one to the possible pool that has the fewest RRHs, update the counts and continue until every RRH is assigned.
+## Phase 3: 5G link budget in Excel (week 4, workbook done)
 
-**Outputs to simulate and plot**
+Instructions: `phase3/5G_link_budget.pdf`. Due **30 November 2026**. Branch `phase3-5G-link-budget`.
+Deliverable: `phase3/5G_link_budget.xlsx`, one sheet, kept simple on purpose (weekly-report level).
+Details: `week4.txt`.
 
-Before balancing (pools assigned by delay only):
-- [ ] Load per pool at 8:00, 15:00 and 21:00: three figures, x = pool id, y = total load (Mbps or GOPS).
-- [ ] At least at peak hour: 3 bars per pool for all residential, all office and the real mix.
-- [ ] Overall network load over 24 h (like fig. 4.21 of the thesis).
-
-After balancing:
-- [ ] Number of RRHs per pool for algorithm A (traffic) and algorithm B (number of RRHs), to compare with delay only.
-- [ ] Figure or table of how many RRHs change pool depending on the hour. Re-wiring is not physically possible, so the peak-hour assignment is the one adopted.
-- [ ] Balancing results when all RRHs are residential vs all office.
-- [ ] Number of RRHs per distance band (0–1 km, 1–2 km, …) for the three cases: delay only, traffic balancing, RRH-count balancing (like fig. 4.3 of the thesis).
-- [ ] Average capacity per pool for the same three cases (like fig. 4.4 of the thesis).
-- [ ] Repeat the whole comparison for three values of K: normal, too few pools, too many pools.
+- **Structure:** same steps as 5g-tools (EIRP, sensitivity, margins, path loss, PASS/FAIL at a distance),
+  downlink and uplink in two columns, a short explanation per row, plus MAPL, maximum range and cell radius.
+- **Values:** n78 3.5 GHz, 30 kHz SCS, 273 RB; gNB 53 dBm, 17 dBi, 2 dB cable; UE 23 dBm, 20 RB; NF 7 / 5 dB;
+  SINR -6 dB, margins 7 / 2 / 1 dB (5g-tools values); UMa NLOS, gNB 25 m, outdoor.
+- **Numbers:** MAPL DL 151.1 dB, UL 134.4 dB -> range 1,741 m / 653 m, cell radius 653 m (uplink-limited),
+  about 1,084 sites for 900 km2 vs 1,134 real 5G sites.
+- **Check:** with the 5g-tools NR example inputs the sheet gives the same margin (+3.77 dB).
 
 ## Next steps
 
 Phase 1, still open:
 - [ ] Check a few Madrid sites by eye on the Infoantenas portal against the dataset.
-- [x] Synthetic RRH injection (variable count, labelled).
-- [x] RRH-to-candidate distance matrix and conversion to fronthaul delay.
-- [x] Farthest-first k-center for several K, then RRH-to-pool assignment by delay (this is the baseline for phase 2).
 - [ ] Check the office / mixed zones of the geographic traffic rule on `phase1/maps/map02_traffic_patterns.html`.
-- [ ] 5G link budget in Excel.
 
-Phase 2:
-- [ ] Define the 24 h traffic profiles (residential, office, mixed), the conversion to Mbps or GOPS, and how each RRH gets its profile.
-- [x] Build the list of possible pools for each RRH (within the delay limit): `options` column of `phase1/data/assignment_K19.csv`.
-- [ ] Implement algorithms A and B, then produce the figures listed above.
+Phase 3:
+- [x] Study the example calculator and list every parameter.
+- [x] Build the Excel workbook (uplink and downlink, NR parameters), with an explanation of each parameter.
+- [x] Cross-check against the online calculator (5g-tools NR example).
+- [x] `week4.txt`.
+- [ ] Open the workbook in Excel once, check the layout and save it (stores computed values).
+- [x] Week 4 report: `reports/week4_report_phase3.docx` (figure in `phase3/figures/`).
+- [ ] Phase-2 and phase-3 sections of `report.txt`.
 
 Every week:
-- [ ] Weekly report, and `report.txt` updated.
+- [ ] Weekly report, and `report.txt` updated (phase-2 section still missing in `report.txt`).
 
 ## Working rules
 

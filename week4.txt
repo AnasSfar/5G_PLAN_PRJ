@@ -1,0 +1,57 @@
+WEEK 4 - PHASE 3: 5G LINK BUDGET IN EXCEL
+=========================================
+Goal (phase3/5G_link_budget.pdf, due 30 November 2026): an Excel 5G link budget based on the example
+https://5g-tools.com/4g-LTE-link-budget-calculator/, explaining every parameter of the calculation.
+
+File: phase3/5G_link_budget.xlsx, one sheet "Link Budget". Downlink and uplink in two columns, inputs in
+blue on yellow, an explanation for each row.
+
+
+1. CALCULATION (same steps as 5g-tools)
+---------------------------------------
+  Tx power per RB    DL: P_tot - 10 log10(N_RB)        UL: P_tot - 10 log10(N_alloc)
+  EIRP               = Tx power in allocated RBs + Tx antenna gain - Tx cable loss
+  Sensitivity        = -174 + 10 log10(N_alloc x 12 x SCS) + NF + SINR
+  Path loss          3GPP TR 38.901 UMa NLOS: 13.54 + 39.08 log10(d3D) + 20 log10(fc GHz) - 0.6 (hUT - 1.5)
+  Received power     = EIRP - path loss - margins + Rx gain - Rx cable loss
+  Link margin        = received power - sensitivity  (PASS if >= 0)
+  MAPL               = path loss for which the margin is 0
+  Maximum range      = UMa NLOS formula solved for d at PL = MAPL; cell radius = min(DL, UL)
+
+Differences with the LTE example: NR resource block = 12 subcarriers x 30 kHz (mu = 1) = 360 kHz instead of
+180 kHz, 273 RBs in a 100 MHz n78 carrier, and the cell radius is computed instead of typed by hand.
+
+
+2. VALUES USED
+--------------
+  Frequency 3500 MHz (n78), 100 MHz, SCS 30 kHz, 273 RB; UMa NLOS, gNB 25 m, UE 1.5 m.
+                       DL (gNB -> UE)    UL (UE -> gNB)
+  Total Tx power       53 dBm (200 W)    23 dBm (power class 3)
+  Allocated RBs        273               20
+  Antenna gain         17 dBi            17 dBi at the gNB (Rx)
+  Cable loss           2 dB              2 dB
+  Noise figure         7 dB (UE)         5 dB (gNB)
+  SINR, margins        -6 dB SINR; slow fading 7 dB, interference 2 dB, body 1 dB (5g-tools values)
+  Penetration          0 dB (outdoor user)
+
+
+3. RESULTS
+----------
+                       DL            UL
+  EIRP                 68.0 dBm      23.0 dBm
+  Sensitivity          -93.1 dBm     -106.4 dBm
+  MAPL                 151.1 dB      134.4 dB
+  Maximum range        1,741 m       653 m
+- Cell radius 653 m, limited by the uplink: the phone transmits 30 dB less power than the gNB.
+- At 500 m both links pass (margin DL +21.2 dB, UL +4.5 dB).
+- Covering the 900 km2 of the scenario with 3-sector sites (area 1.95 R^2) needs about 1,084 sites, the
+  same order as the 1,134 real sites with 5G found in week 1. For indoor users (about 15 dB more loss) the
+  radius drops a lot, so indoor coverage relies on the lower bands.
+- Check: with the inputs of the 5g-tools NR example (3500 MHz, 1000 m, 1 RB, 23 dBm per RB) the sheet gives
+  the same values as the web page: path loss 141.67 dB, sensitivity -117.44 dBm, margin +3.77 dB.
+
+
+4. LIMITS
+---------
+- One propagation model (UMa NLOS); the LOS case and other environments are not included.
+- Margins are fixed typical values, not measured in Madrid.
